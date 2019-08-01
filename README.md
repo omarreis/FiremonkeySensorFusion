@@ -9,8 +9,10 @@ This project uses DelphiWorlds sensor files, by Dave Nottage ( the ones with DW.
 Works as follows:
 1. Get GPS position, to calculate Magnetic Declination. Android offers a WMM service for that. iOS seems to have it too, but I worked the magnetic declination indirectly from TrueHeading/MagHeading properties of the GPS device. Note that iOS GPS sensor has a TrueHeading property, but it has a problem when the altitude crosses the 45 degree boundary (the TrueHeading jumps several degrees at that point)
 2. Get Accelerometer and Magnetometer 3D vectors
-3. Calculate tilt compensated rectangular coordinates (azimuth/altitude/roll or azimuth/elevation/roll or pitch/bank/roll)
+3. Calculate tilt compensated rectangular coordinates* by rotating the magnetometer vector with the acceletrometer vector.
 4. Apply magnetic declination to obtain True Heading (azimuth)
+
+* (azimuth/altitude/roll or azimuth/elevation/roll or pitch/bank/roll)
 
 For Delphi Firemonkey ( compiled w/ D10.3.1 Rio )
 
