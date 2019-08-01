@@ -1,0 +1,307 @@
+object frmMain: TfrmMain
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 445
+  ClientWidth = 368
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnActivate = FormActivate
+  DesignerMasterStyle = 0
+  object rectAccel: TRectangle
+    Align = Top
+    Size.Width = 368.000000000000000000
+    Size.Height = 78.000000000000000000
+    Size.PlatformDefault = False
+    object labAccelX: TLabel
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 8.000000000000000000
+      Position.Y = 46.000000000000000000
+      Size.Width = 97.000000000000000000
+      Size.Height = 23.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 10.000000000000000000
+      Text = 'x:'
+      TabOrder = 0
+    end
+    object labAccelY: TLabel
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 120.000000000000000000
+      Position.Y = 46.000000000000000000
+      Size.Width = 97.000000000000000000
+      Size.Height = 23.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 10.000000000000000000
+      Text = 'y:'
+      TabOrder = 1
+    end
+    object labAccelZ: TLabel
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 232.000000000000000000
+      Position.Y = 45.000000000000000000
+      Size.Width = 105.000000000000000000
+      Size.Height = 23.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 10.000000000000000000
+      Text = 'z:'
+      TabOrder = 2
+    end
+    object labAccelDatetime: TLabel
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 8.000000000000000000
+      Position.Y = 26.000000000000000000
+      Size.Width = 220.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 10.000000000000000000
+      Text = 'date/time'
+      TabOrder = 3
+    end
+    object Label2: TLabel
+      StyledSettings = [Family]
+      Position.X = 8.000000000000000000
+      Position.Y = 6.000000000000000000
+      Size.Width = 153.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.FontColor = claDimgray
+      Text = 'Accelerometer'
+      TabOrder = 4
+    end
+    object labAccelMS: TLabel
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 160.000000000000000000
+      Position.Y = 5.000000000000000000
+      Size.Width = 89.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 10.000000000000000000
+      Text = '0.00 ms'
+      TabOrder = 5
+    end
+  end
+  object rectMagnetometer: TRectangle
+    Align = Top
+    Position.Y = 78.000000000000000000
+    Size.Width = 368.000000000000000000
+    Size.Height = 72.000000000000000000
+    Size.PlatformDefault = False
+    object labMagX: TLabel
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 8.000000000000000000
+      Position.Y = 46.000000000000000000
+      Size.Width = 89.000000000000000000
+      Size.Height = 24.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 10.000000000000000000
+      Text = 'x:'
+      TabOrder = 0
+    end
+    object labMagY: TLabel
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 120.000000000000000000
+      Position.Y = 44.000000000000000000
+      Size.Width = 97.000000000000000000
+      Size.Height = 24.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 10.000000000000000000
+      Text = 'y:'
+      TabOrder = 1
+    end
+    object labMagZ: TLabel
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 232.000000000000000000
+      Position.Y = 45.000000000000000000
+      Size.Width = 89.000000000000000000
+      Size.Height = 24.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 10.000000000000000000
+      Text = 'z:'
+      TabOrder = 2
+    end
+    object labMagDatetime: TLabel
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 8.000000000000000000
+      Position.Y = 30.000000000000000000
+      Size.Width = 220.000000000000000000
+      Size.Height = 20.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 10.000000000000000000
+      Text = 'date/time'
+      TabOrder = 3
+    end
+    object Label7: TLabel
+      StyledSettings = [Family]
+      Position.X = 8.000000000000000000
+      Position.Y = 6.000000000000000000
+      Size.Width = 153.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.FontColor = claDimgray
+      Text = 'Magnetometer'
+      TabOrder = 4
+    end
+    object labMagMS: TLabel
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 160.000000000000000000
+      Position.Y = 5.000000000000000000
+      Size.Width = 97.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 10.000000000000000000
+      Text = '0.00 ms'
+      TabOrder = 5
+    end
+  end
+  object rectCompass: TRectangle
+    Align = Top
+    Position.Y = 150.000000000000000000
+    Size.Width = 368.000000000000000000
+    Size.Height = 75.000000000000000000
+    Size.PlatformDefault = False
+    object labMagHeading: TLabel
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 11.000000000000000000
+      Position.Y = 20.000000000000000000
+      Size.Width = 86.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 16.000000000000000000
+      Text = '0'
+      TabOrder = 0
+    end
+    object Label8: TLabel
+      StyledSettings = [Family]
+      Position.X = 8.000000000000000000
+      Position.Y = 2.000000000000000000
+      Size.Width = 89.000000000000000000
+      Size.Height = 23.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.FontColor = claDimgray
+      Text = 'Heading'
+      TabOrder = 1
+    end
+    object Label3: TLabel
+      StyledSettings = [Family]
+      Position.X = 152.000000000000000000
+      Position.Y = 10.000000000000000000
+      Size.Width = 68.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.FontColor = claDimgray
+      Text = 'Altitude'
+      TabOrder = 2
+    end
+    object labAltitude: TLabel
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 218.000000000000000000
+      Position.Y = 8.000000000000000000
+      Size.Width = 94.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 14.000000000000000000
+      Text = '0'
+      TabOrder = 3
+    end
+    object Label4: TLabel
+      StyledSettings = [Family]
+      Position.X = 152.000000000000000000
+      Position.Y = 34.000000000000000000
+      Size.Width = 68.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.FontColor = claDimgray
+      Text = 'Roll'
+      TabOrder = 4
+    end
+    object labRoll: TLabel
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 218.000000000000000000
+      Position.Y = 32.000000000000000000
+      Size.Width = 94.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 14.000000000000000000
+      Text = '0'
+      TabOrder = 5
+    end
+    object labCardinal: TLabel
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 96.000000000000000000
+      Position.Y = 44.000000000000000000
+      Size.Width = 41.000000000000000000
+      Size.Height = 25.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 16.000000000000000000
+      TextSettings.HorzAlign = Center
+      Text = '--'
+      TabOrder = 6
+    end
+    object labTrueHeading: TLabel
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 11.000000000000000000
+      Position.Y = 43.000000000000000000
+      Size.Width = 86.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 16.000000000000000000
+      Text = '0'
+      TabOrder = 7
+    end
+  end
+  object rectLocation: TRectangle
+    Align = Top
+    Position.Y = 225.000000000000000000
+    Size.Width = 368.000000000000000000
+    Size.Height = 67.000000000000000000
+    Size.PlatformDefault = False
+    object Label5: TLabel
+      StyledSettings = [Family]
+      Position.X = 8.000000000000000000
+      Position.Y = 2.000000000000000000
+      Size.Width = 81.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.FontColor = claDimgray
+      Text = 'Location'
+      TabOrder = 0
+    end
+    object labLocLat: TLabel
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 16.000000000000000000
+      Position.Y = 43.000000000000000000
+      Size.Width = 89.000000000000000000
+      Size.Height = 24.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'lat:'
+      TabOrder = 1
+    end
+    object labLocLon: TLabel
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 128.000000000000000000
+      Position.Y = 43.000000000000000000
+      Size.Width = 97.000000000000000000
+      Size.Height = 24.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'lon:'
+      TabOrder = 2
+    end
+    object labLocMagDecl: TLabel
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 240.000000000000000000
+      Position.Y = 43.000000000000000000
+      Size.Width = 129.000000000000000000
+      Size.Height = 24.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'mag dec:'
+      TabOrder = 3
+    end
+  end
+end
