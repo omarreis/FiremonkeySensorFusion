@@ -14,5 +14,6 @@ Works as follows:
 
 For Delphi Firemonkey ( compiled w/ D10.3.1 Rio )
  
-SensorFusionDemo screenshot 
+SensorFusionDemo screenshot.
+
 ![Screenshot](SensorFusionShot.png)
