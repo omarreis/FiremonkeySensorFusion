@@ -12,7 +12,7 @@ Works as follows:
 3. Calculate tilt compensated rectangular coordinates* by rotating the magnetometer vector with the accelerometer vector. This results in the magnetic vector in relation to the phone attitude.
 4. Apply magnetic declination to obtain True Heading (azimuth)
 
-* ( many names for rectangular coordinates: azimuth/altitude/roll or azimuth/elevation/roll or pitch/bank/roll )
+* ( many names for rectangular coordinates: azimuth/altitude/roll or heading/elevation/roll or pitch/bank/roll )
 
 For Delphi Firemonkey ( compiled and tested w/ D10.3.1 Rio )
 
