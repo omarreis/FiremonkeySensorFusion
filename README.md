@@ -4,7 +4,9 @@ This can be used to power augmented reality apps for mobile devices.
 
 Cross platform code ( Android and iOS )
 
-This project uses DelphiWorlds sensor files, by Dave Nottage ( the ones with DW. prefix )
+This project uses DelphiWorlds Android sensor code, by Dave Nottage ( the ones with DW. prefix )
+
+This component is currently used in app "CamSextant"  
 
 Works as follows:
 1. Get GPS position, to calculate Magnetic Declination. Android offers a WMM service for that. iOS seems to have it too, but I worked the magnetic declination from TrueHeading/MagHeading properties of the GPS device. 
@@ -19,6 +21,9 @@ For Delphi Firemonkey ( compiled and tested w/ D10.3.1 Rio )
 iOS version uses a 100ms timer to get sensor readings. It would be better to use sensor change events, but I don't know how to do that.
 
 Note that iOS GPS sensor has a TrueHeading property, which could be used directly, avoiding all this. But it has a problem when the altitude crosses the 45 degree boundary. The GPS TrueHeading jumps several degrees at that point. My guess is that iOS changes the rectangular coordinates axis when the altitude is more than 45 degrees, which I think is wrong. Not sure.
+
+note: versions before D10.3.3 used a hack to pass int64 via JNI on Android (Delphi JNI had some endian problem  ).
+This was commented when the compiler was corrected. Watch if using previous Delphi versions ( i.e. uncomment the hack )
  
 SensorFusionDemo screenshot.
 
