@@ -16,7 +16,7 @@ Works as follows:
 
 * ( many names for rectangular coordinates: azimuth/altitude/roll or heading/elevation/roll or pitch/bank/roll )
 
-For Delphi Firemonkey ( compiled and tested w/ D10.3.1 Rio )
+For Delphi Firemonkey ( compiled and tested w/ D10.3.3 Rio )
 
 iOS version uses a 100ms timer to get sensor readings. It would be better to use sensor change events, but I don't know how to do that.
 
