@@ -10,7 +10,7 @@ uses
 Type
   TMagnetoAccelerometerFusion=class
   private
-    [Weak] fParentForm:TForm;
+    [Weak] fParentForm:TCommonCustomForm;  //changed from TForm that to accept TForm and TForm3D
 
     fAccelSensor: TSensor;        // DW sensors
     fMagSensor:   TSensor;
@@ -30,21 +30,28 @@ Type
     procedure CalcShowTiltCompensatedHeading;
     procedure LocationSensorLocationChanged(Sender: TObject; const OldLocation,NewLocation: TLocationCoord2D);
   public
-    fGx,fGy,fGz,                       //accelerometer vec
-    fMx,fMy,fMz:Single;                //magnetometer vec
+    fGx,fGy,fGz,                  //accelerometer vec
+    fMx,fMy,fMz:Single;           //magnetometer vec
 
     fTCMagHeading,fTCTrueHeading,fAltitude,fRoll:Single; //results in rectangular coordinates Azimuth/elevation/roll
-    fAccelMS,fMagMS:int64;             //time in ms between sensor events
-    fCompassMinTime:int64;             //minimun time between compass events
 
-    fMagDeclination:Single;
-    fLocationTime:TDatetime;
-    fLocationLat   :Single;
-    fLocationLon   :Single;
+    fAccelMS,fMagMS:int64;        //time in ms between sensor events
+    fCompassMinTime:int64;        //minimun time between compass events
 
-    Constructor Create(aForm:TForm);
+    fMagDeclination:Single;       //mag decl  ( calculated with wwm for Android, from GPS sensor on iOS )
+
+    // fLocationxxx = GPS sensor location
+    fLocationTime:TDatetime;   //local time
+    fLocationLat :Single;      // GPS loc
+    fLocationLon :Single;      // lon uses int'l lon signal convention ( E+ )
+
+    fErrorMessage:String;
+
+    Constructor Create(aForm:TCommonCustomForm);
     Destructor  Destroy; override;
     procedure   StartStopSensors(bStart: boolean);
+    property    LocationSensor: TLocationSensor read fLocationSensor;
+
     property    OnAccelerometerChange:TNotifyEvent   read fOnAccelerometerChange   write fOnAccelerometerChange;
     property    OnMagnetometerChange:TNotifyEvent    read fOnMagnetometerChange    write fOnMagnetometerChange;
     property    OnHeadingAltitudeChange:TNotifyEvent read fOnHeadingAltitudeChange write fOnHeadingAltitudeChange;
@@ -56,7 +63,7 @@ implementation //---------------------------------------------------------------
 
 uses
   {$IFDEF ANDROID}
-  Androidapi.JNI.Interfaces.JGeomagneticField,  //
+  Androidapi.JNI.Interfaces.JGeomagneticField,  // mag declination  calc using WMM
   {$ENDIF ANDROID}
   System.DateUtils,
   System.Math;
@@ -105,7 +112,7 @@ end;
 
 { TMagnetoAccelerometerFusion }
 
-constructor TMagnetoAccelerometerFusion.Create(aForm:TForm);
+constructor TMagnetoAccelerometerFusion.Create(aForm:TCommonCustomForm);
 begin
   inherited Create;
   fParentForm := aForm;
@@ -145,13 +152,15 @@ begin
   fLocationSensor := TLocationSensor.Create(nil);
   fLocationSensor.Accuracy := 50.0;
   fLocationSensor.OnLocationChanged := LocationSensorLocationChanged;
+
+  fErrorMessage:='';
 end;
 
 destructor TMagnetoAccelerometerFusion.Destroy;
 begin
   fAccelSensor.Free;
   fMagSensor.Free;
-  fLocationSensor.Free;
+  // fLocationSensor.Free;   // tava dando algum pau no iOS
 
   inherited;
 end;
@@ -179,32 +188,40 @@ var GeoField: JGeomagneticField; tw1,tw2:int64; t0,t:TDatetime;   tm:int64;
 begin
   // here it should have been UTC time, not Local.. but the dif is little
   tm := System.DateUtils.DateTimeToUnix( Now, {InputAsUTC:} false )*1000;
-  
+
   // jan20: the line below was required to fix a compiler bug, corrected in Rio, apparently :)
   //   tm := switchDWords(tm);    // <--- hack tm. Correct some endian problem passing int64 to Java API
   //   see https://stackoverflow.com/questions/53342348/wrong-result-calling-android-method-from-delphi/53373965#53373965
-  
+
   GeoField := TJGeomagneticField.JavaClass.init(aLat,aLon,aAlt,tm );
   Result   := GeoField.getDeclination();
 end;
 {$ENDIF ANDROID}
 
+// GPS sensor events
 procedure TMagnetoAccelerometerFusion.LocationSensorLocationChanged(Sender: TObject; const OldLocation,NewLocation: TLocationCoord2D);
+var aMagDec:Single;
 begin
-  fLocationTime  := Now;
+  fLocationTime  := Now;   //local tm
   fLocationLat   := NewLocation.Latitude;    //just save loc
-  fLocationLon   := NewLocation.Longitude;   //chg
+  fLocationLon   := NewLocation.Longitude;   //all intl lon signal conv
 
-  {$IFDEF Android}    // update mag delination. For Android only. iOS gives True heading directly AFAIK
+  // update mag delination
+  {$IFDEF Android}    // For Android only. iOS gives True heading directly AFAIK
   fMagDeclination := getGeomagneticDeclination({Lat:}NewLocation.Latitude ,{Lon:}NewLocation.Longitude, {Alt:} 0 ); // TODO: put a real altitude
   {$ENDIF Android}
 
   {$IFDEF iOS}
-  fMagDeclination := fLocationSensor.Sensor.TrueHeading-fLocationSensor.Sensor.MagneticHeading; //obtain mag dec from GPS sensor
-  if not IsNaN(fMagDeclination) then
+  // iOS LocationSensor calculates mag decl
+  if not ( IsNaN(fLocationSensor.Sensor.TrueHeading) or IsNaN(fLocationSensor.Sensor.MagneticHeading) )  then
     begin
-      if      (fMagDeclination<-180) then fMagDeclination:=fMagDeclination+360   //normalize in -180..+180 range
-      else if (fMagDeclination>+180) then fMagDeclination:=fMagDeclination-360;
+      aMagDec := fLocationSensor.Sensor.TrueHeading-fLocationSensor.Sensor.MagneticHeading; //obtain mag dec from GPS sensor
+      if not IsNaN(aMagDec) then    //have obtained a valid magdecl from gps sensor
+        begin
+          fMagDeclination := aMagDec;   // mag decl, as received from location sensor
+          if      (fMagDeclination<-180) then fMagDeclination:=fMagDeclination+360     //normalize in -180..+180 range
+          else if (fMagDeclination>+180) then fMagDeclination:=fMagDeclination-360;
+        end;
     end;
   {$ENDIF iOS}
 
@@ -291,9 +308,9 @@ begin
   if ok then
     begin
       aMagHeading := -aMagHeading-180;     // invert angle direction and start pos to get North based heading (don't ask me why..)
-      while (aMagHeading<0) do aMagHeading:=aMagHeading+360;
+      while (aMagHeading<0) do aMagHeading:=aMagHeading+360;        // put in 0..360
       //return angles
-      fTCMagHeading  := aMagHeading;  // tilt compensated heading = course
+      fTCMagHeading  := aMagHeading;       // tilt compensated heading (aka course,cap,heading,bearing..)
       if not IsNaN(fMagDeclination) then
         begin
           fTCTrueHeading := aMagHeading+fMagDeclination;
@@ -314,6 +331,8 @@ procedure TMagnetoAccelerometerFusion.StartStopSensors(bStart: boolean);
 var T:TDatetime;
 begin
   T := Now;
+  fErrorMessage:='';
+
   fAccelSensor.IsActive   := False;  //restart
   fAccelSensor.SensorType := TSensorType.Accelerometer;
   fAccelSensorTime        := T;
@@ -324,7 +343,14 @@ begin
   fMagSensorTime          := T;
   fMagSensor.IsActive     := bStart;
 
-  fLocationSensor.Active  := bStart;
+  //may throw  exception, if permission not granted
+  try
+    fLocationSensor.Active  := bStart;
+  except
+    // TODO:
+    if bStart then fErrorMessage := 'Error starting LocationSensor'
+      else fErrorMessage := 'Error stopping LocationSensor';
+  end;
 
   fCompassEventTime   := T;
 end;
