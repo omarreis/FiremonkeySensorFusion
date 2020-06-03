@@ -1,8 +1,8 @@
 # FiremonkeySensorFusion
-Accelerometer + Magnetometer + GPS sensor association to calculate rectangular coordinates ( aka azimuth/altitude/roll ).
+Accelerometer+Magnetometer+GPS sensor association object. The object calculates rectangular coordinates.
 This can be used to power augmented reality apps for mobile devices. 
 
-Cross platform code ( Android and iOS ). Tested w/ D10.3.3
+Cross platform code ( Android and iOS ). Tested w/ Delphi 10.3.3
 
 This project uses DelphiWorlds Android sensor code (KastriFree lib)  by Dave Nottage ( files with DW. prefix )
 
@@ -16,9 +16,9 @@ Works as follows:
 
 * ( many names for rectangular coordinates: azimuth/altitude/roll or heading/elevation/roll or pitch/bank/roll )
 
-For Delphi Firemonkey ( compiled and tested w/ D10.3.3 Rio )
-
 iOS version uses a 100ms timer to get sensor readings. It would be better to use sensor change events, but I don't know how to do that.
+
+Android version uses native sensor code ( DelphiWorlds )
 
 Note that iOS GPS sensor has a TrueHeading property, which could be used directly, avoiding all this. But it has a problem when the altitude crosses the 45 degree boundary. The GPS TrueHeading jumps several degrees at that point. My guess is that iOS changes the rectangular coordinates axis when the altitude is more than 45 degrees, which I think is wrong. Not sure.
 
