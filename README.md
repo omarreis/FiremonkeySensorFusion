@@ -27,9 +27,9 @@ This was commented when the compiler was corrected. Watch if using previous Delp
 
 ## Usage samples
 
-* SensorFusionDemo1 - SImple sample in this repository
-* BoatAttitude - A more elaborate sample can be found at https://github.com/omarreis/BoatAttitude
-
+* SensorFusionDemo1 - SImple sample in this repository.
+* BoatAttitude - A more elaborate sample can be found at https://github.com/omarreis/BoatAttitude . The app illustrates how to use quaternions to set object rotations, instead of manipulating RotationAngle
+.
 ## SensorFusionDemo screenshot.
 
 ![Screenshot](SensorFusionShot.png)
