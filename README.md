@@ -2,9 +2,9 @@
 Accelerometer + Magnetometer + GPS sensor association to calculate rectangular coordinates ( aka azimuth/altitude/roll ).
 This can be used to power augmented reality apps for mobile devices. 
 
-Cross platform code ( Android and iOS )
+Cross platform code ( Android and iOS ). Tested w/ D10.3.3
 
-This project uses DelphiWorlds Android sensor code, by Dave Nottage ( the ones with DW. prefix )
+This project uses DelphiWorlds Android sensor code (KastriFree lib)  by Dave Nottage ( files with DW. prefix )
 
 This component is currently used in app "CamSextant"  
 
@@ -24,7 +24,12 @@ Note that iOS GPS sensor has a TrueHeading property, which could be used directl
 
 note: versions before D10.3.3 used a hack to pass int64 via JNI on Android (Delphi JNI had some endian problem  ).
 This was commented when the compiler was corrected. Watch if using previous Delphi versions ( i.e. uncomment the hack )
- 
-SensorFusionDemo screenshot.
+
+## Usage samples
+
+* SensorFusionDemo1 - SImple sample in this repository
+* BoatAttitude - A more elaborate sample can be found at https://github.com/omarreis/BoatAttitude
+
+## SensorFusionDemo screenshot.
 
 ![Screenshot](SensorFusionShot.png)
