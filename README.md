@@ -30,8 +30,8 @@ This was commented when the compiler was corrected. Watch if using previous Delp
 ## Usage samples
 
 * SensorFusionDemo1 - SImple sample in this repository.
-* BoatAttitude - A more elaborate sample. A boat model is target by a camera controlled by phone attitude. Can be found at https://github.com/omarreis/BoatAttitude . The app illustrates how to use *quaternions* to set 3d object rotations, instead of manipulating RotationAngle. 
-* Also in the same repository: sample *AirlinerAttitude* features an 3d airplane model.
+* BoatAttitude - A more elaborate sample. A boat 3d model is targeted by a camera controlled by phone attitude. Can be found at https://github.com/omarreis/BoatAttitude . The app illustrates how to use *quaternions* to set 3d object rotations, instead of manipulating RotationAngle. 
+* Also in the same repository: sample *AirlinerAttitude* features an 3d airplane model, for the aviation inclined.
 .
 ## SensorFusionDemo screenshot.
 
