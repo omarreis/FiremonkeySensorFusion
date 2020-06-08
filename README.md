@@ -4,6 +4,8 @@ This can be used to power augmented reality apps for mobile devices.
 
 Cross platform code ( Android and iOS ). Tested w/ Delphi 10.3.3
 
+Tags: #delphi #firemonkey #Sensorfusion #pascal
+
 This project uses DelphiWorlds Android sensor code (KastriFree lib)  by Dave Nottage ( files with DW. prefix )
 
 This component is currently used in app "CamSextant"  
@@ -28,7 +30,8 @@ This was commented when the compiler was corrected. Watch if using previous Delp
 ## Usage samples
 
 * SensorFusionDemo1 - SImple sample in this repository.
-* BoatAttitude - A more elaborate sample can be found at https://github.com/omarreis/BoatAttitude . The app illustrates how to use quaternions to set object rotations, instead of manipulating RotationAngle
+* BoatAttitude - A more elaborate sample. A boat model is target by a camera controlled by phone attitude. Can be found at https://github.com/omarreis/BoatAttitude . The app illustrates how to use *quaternions* to set 3d object rotations, instead of manipulating RotationAngle. 
+* Also in the same repository: sample *AirlinerAttitude*.
 .
 ## SensorFusionDemo screenshot.
 
