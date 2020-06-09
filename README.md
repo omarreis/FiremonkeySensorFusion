@@ -1,3 +1,5 @@
+![Banner](AirlinerAttitudeBanner.png)
+
 # FiremonkeySensorFusion
 Accelerometer+Magnetometer+GPS sensor association object. The object calculates rectangular coordinates.
 This can be used to power augmented reality apps for mobile devices. 
