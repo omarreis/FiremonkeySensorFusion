@@ -33,11 +33,14 @@ This was commented when the compiler was corrected. Watch if using previous Delp
 * Add unit to uses:  MagnetometerAccelerometerFusion
 * Add to the form:  fMagAccelFusion:TMagnetoAccelerometerFusion;
 * On FormCreate:
-    fMagAccelFusion := TMagnetoAccelerometerFusion.Create(Self);
-    // fMagAccelFusion.OnAccelerometerChange  := FusionSensorAccelChanged;          //optional sensor events
-    // fMagAccelFusion.OnMagnetometerChange   := FusionSensorMagChanged;
-    fMagAccelFusion.OnHeadingAltitudeChange:= FusionSensorHeadingAltitudeChanged;   // combined sensor change handler
+
+      fMagAccelFusion := TMagnetoAccelerometerFusion.Create(Self);
+      // fMagAccelFusion.OnAccelerometerChange  := FusionSensorAccelChanged;          //optional sensor events
+      // fMagAccelFusion.OnMagnetometerChange   := FusionSensorMagChanged;
+      fMagAccelFusion.OnHeadingAltitudeChange:= FusionSensorHeadingAltitudeChanged;   // combined sensor change handler
+    
 * Implement sensor handler:  
+
       procedure TfrmMain.FusionSensorHeadingAltitudeChanged(Sender:TObject);
       begin
         labMagHeading.Text  := Format('m: %5.1f°', [fMagAccelFusion.fTCMagHeading]); 
