@@ -29,9 +29,26 @@ Note that iOS GPS sensor has a TrueHeading property, which could be used directl
 note: versions before D10.3.3 used a hack to pass int64 via JNI on Android (Delphi JNI had some endian problem  ).
 This was commented when the compiler was corrected. Watch if using previous Delphi versions ( i.e. uncomment the hack )
 
-## Usage samples
-
-* SensorFusionDemo1 - SImple sample in this repository.
+## Usage
+* Add unit to uses:  MagnetometerAccelerometerFusion
+* Add to the form:  fMagAccelFusion:TMagnetoAccelerometerFusion;
+* On FormCreate:
+    fMagAccelFusion := TMagnetoAccelerometerFusion.Create(Self);
+    // fMagAccelFusion.OnAccelerometerChange  := FusionSensorAccelChanged;          //optional sensor events
+    // fMagAccelFusion.OnMagnetometerChange   := FusionSensorMagChanged;
+    fMagAccelFusion.OnHeadingAltitudeChange:= FusionSensorHeadingAltitudeChanged;   // combined sensor change handler
+* Implement sensor handler:  
+      procedure TfrmMain.FusionSensorHeadingAltitudeChanged(Sender:TObject);
+      begin
+        labMagHeading.Text  := Format('m: %5.1f°', [fMagAccelFusion.fTCMagHeading]); 
+        labTrueHeading.Text := Format('t: %5.1f°', [fMagAccelFusion.fTCTrueHeading]);
+        labAltitude.Text  := Format('%5.1f°', [fMagAccelFusion.fAltitude] );
+        labRoll.Text      := Format('%5.1f°', [fMagAccelFusion.fRoll] );
+        ....
+        ...
+        
+## Samples
+* SensorFusionDemo1 - Simple usage sample in this repository.
 * BoatAttitude - A more elaborate sample. A boat 3d model is targeted by a camera controlled by phone attitude. Can be found at https://github.com/omarreis/BoatAttitude . The app illustrates how to use *quaternions* to set 3d object rotations, instead of manipulating RotationAngle. 
 * Also in the same repository: sample *AirlinerAttitude* features an 3d airplane model, for the aviation inclined.
 .
