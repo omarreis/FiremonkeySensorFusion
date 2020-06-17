@@ -57,6 +57,8 @@ This was commented when the compiler was corrected. Watch if using previous Delp
         {$ENDIF Android}
 
         {$IFDEF IOS}  fMagAccelFusion.StartStopSensors({bStart:} true );  {$ENDIF IOS}
+        
+* It is good practice to disable the sensors when the app goes to background (Home btn), and enable when it comes back.       
 
 ## Samples
 * SensorFusionDemo1 - Simple usage sample in this repository.
