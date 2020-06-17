@@ -50,16 +50,13 @@ This was commented when the compiler was corrected. Watch if using previous Delp
         ....
         ...
         
-* On FormActivate: Start sensors. For iOS you may call StartStopSensors(true). For Android, you have to ask permission to use the sensors first and start them when the permissions are granted. The samples use DelphiWorld's permisson requester for that.
+* On FormActivate: Start sensors. For iOS you may call StartStopSensors(true). For Android, you have to ask permission to use the sensors first and start when the permissions are granted. The sample code uses DelphiWorld's permisson requester for that.
 
-    {$IFDEF Android}  // request permissions to work
-    FRequester.RequestPermissions([cPermissionAccessCoarseLocation,cPermissionAccessFineLocation],                            cPermissionsBoatAttitude); 
-    {$ENDIF Android}
+        {$IFDEF Android}  // request permissions to work
+        FRequester.RequestPermissions([cPermissionAccessCoarseLocation,cPermissionAccessFineLocation],                            cPermissionsBoatAttitude); 
+        {$ENDIF Android}
 
-    {$IFDEF IOS}
-    fMagAccelFusion.StartStopSensors({bStart:} true );  //start sensor feed
-    {$ENDIF IOS}
-
+        {$IFDEF IOS}  fMagAccelFusion.StartStopSensors({bStart:} true );  {$ENDIF IOS}
 
 ## Samples
 * SensorFusionDemo1 - Simple usage sample in this repository.
