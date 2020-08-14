@@ -6,6 +6,7 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants, System.Math,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.Controls.Presentation,
   FMX.StdCtrls, FMX.ListBox, FMX.ScrollBox, FMX.Memo, FMX.Objects,
+
   DW.Sensor,
   MagnetometerAccelerometerFusion;
 
@@ -39,13 +40,16 @@ type
     labLocLon: TLabel;
     labLocMagDecl: TLabel;
     labTrueHeading: TLabel;
+    labiOSTrueHeading: TLabel;
+    labLocationStatus: TLabel;
     procedure FormActivate(Sender: TObject);
   private
     //fussion sensor events
     procedure FusionSensorAccelChanged(Sender:TObject);            //acceleration event
     procedure FusionSensorMagChanged(Sender:TObject);              //magnetic event
     procedure FusionSensorHeadingAltitudeChanged(Sender:TObject);
-    procedure updateLocationLabels;  //combined
+    procedure updateLocationLabels;
+    procedure DoStartSensors;  //combined
   public
     fMagAccelFusion:TMagnetoAccelerometerFusion;
     constructor Create(AOwner: TComponent); override;
@@ -60,6 +64,9 @@ implementation
 {$R *.fmx}
 
 uses
+  System.Permissions,  // permission request for Android
+  FMX.DialogService,
+
   System.DateUtils;
 
 
@@ -76,13 +83,6 @@ begin
   fMagAccelFusion.OnAccelerometerChange  := FusionSensorAccelChanged;
   fMagAccelFusion.OnMagnetometerChange   := FusionSensorMagChanged;
   fMagAccelFusion.OnHeadingAltitudeChange:= FusionSensorHeadingAltitudeChanged;
-
-  //available sensors
-  // for LSensorType := Succ(Low(TSensorType)) to High(TSensorType) do
-  // begin
-  //   if TSensor.IsSensorTypeSupported(LSensorType) then
-  //     SensorComboBox.Items.Add(TSensor.SensorNames[LSensorType]);
-  // end;
 end;
 
 destructor TfrmMain.Destroy;
@@ -91,9 +91,26 @@ begin
   inherited;
 end;
 
+procedure TfrmMain.DoStartSensors;
+{$IFDEF ANDROID} const PermissionAccessFineLocation = 'android.permission.ACCESS_FINE_LOCATION'; {$ENDIF}
+begin
+{$IFDEF ANDROID}
+  PermissionsService.RequestPermissions([PermissionAccessFineLocation],
+    procedure(const APermissions: TArray<string>; const AGrantResults: TArray<TPermissionStatus>)
+    begin
+      if (Length(AGrantResults)=1) and (AGrantResults[0]=TPermissionStatus.Granted) then
+        fMagAccelFusion.StartStopSensors({bStart:} true )
+      else TDialogService.ShowMessage('Location permission not granted');
+    end
+  );
+{$ELSE}  //iOS
+   fMagAccelFusion.StartStopSensors({bStart:} true );
+{$ENDIF}
+end;
+
 procedure TfrmMain.FormActivate(Sender: TObject);
 begin
-  fMagAccelFusion.StartStopSensors({bStart:} true );  //start sensor feed
+  DoStartSensors;  //activate on start
 end;
 
 procedure TfrmMain.FusionSensorAccelChanged(Sender:TObject);
@@ -142,6 +159,10 @@ begin
   if not IsNaN(fMagAccelFusion.fTCTrueHeading) then
     labCardinal.Text  := courseToDirectionStr( Trunc(fMagAccelFusion.fTCTrueHeading) )
     else labCardinal.Text  := '?';
+
+  {$IFDEF IOS}   // on iOS there is this LocationSensor.Sensor.TrueHeading ( that sucks )
+  labiOSTrueHeading.Text := 'iOS TH: '+Format('%5.1f°',[fMagAccelFusion.LocationSensor.Sensor.TrueHeading] );
+  {$ENDIF IOS}
 
   updateLocationLabels;
 end;
