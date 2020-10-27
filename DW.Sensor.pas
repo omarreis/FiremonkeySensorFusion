@@ -17,11 +17,11 @@ type
     FSensor: TSensor;
   protected
     FSensorType: TSensorType;
-    function GetIsActive: Boolean; virtual; abstract;
+    function  GetIsActive: Boolean; virtual; abstract;
     procedure SetIsActive(const Value: Boolean); virtual; abstract;
     procedure SetSensorType(const Value: TSensorType); virtual; abstract;
     procedure ValuesChanged(const AValues: TSensorValues; const ATimestamp: TDateTime);
-    property Sensor: TSensor read FSensor;
+    property  Sensor: TSensor read FSensor;
   public
     constructor Create(const ASensor: TSensor); virtual;
   end;
@@ -64,11 +64,15 @@ implementation
 uses
   System.SysUtils,
   {$IFDEF Android}
-  DW.Sensor.Android;
+  DW.Sensor.Android;   // <-- native sensor by DelphiWorlds
+  //Om.Sensor.Android;   // <-- Implementation using System.Sensors
   {$ENDIF Android}
   {$IFDEF iOS}
   Om.Sensor.iOS;
   {$ENDIF iOS}
+  {$IFDEF MsWindows}
+  Om.Sensor.Windows;
+  {$ENDIF MsWindows}
 
 { TCustomPlatformSensor }
 

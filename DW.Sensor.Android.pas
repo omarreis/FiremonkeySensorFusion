@@ -155,10 +155,18 @@ var
   LValues: TSensorValues;
   I: Integer;
   LMillis: Int64;
+  LEventValues: TJavaArray<Single>;
+
 begin
-  SetLength(LValues, event.values.Length);
-  for I := 0 to event.values.Length - 1 do
-    LValues[I] := event.values[I];
+  LEventValues := event.values;
+  try
+    SetLength(LValues, LEventValues.Length);
+    for I := 0 to LEventValues.Length - 1 do
+      LValues[I] := LEventValues[I];
+  finally
+    LEventValues.Free;
+  end;
+
   if FTimestamp = 0 then
   begin
     FSensorStart := Now;
@@ -167,6 +175,7 @@ begin
   else
     LMillis := (event.timestamp - FTimestamp) div 1000000;
   ValuesChanged(LValues, IncMilliSecond(FSensorStart, LMillis));
+  // SetLength(LValues, 0);  //Om: oct20: test
 end;
 
 class function TPlatformSensor.SensorManager: JSensorManager;
@@ -192,7 +201,9 @@ begin
     LSensor := GetDefaultSensor(GetPlatformSensorType(FSensorType));
     if LSensor <> nil then
     begin
+      // Om: test: changed delay to try to evoid error in global reference table...
       SensorManager.registerListener(FListener, LSensor, TJSensorManager.JavaClass.SENSOR_DELAY_NORMAL); //!!!! (Sampling period)
+      // SensorManager.registerListener(FListener, LSensor, TJSensorManager.JavaClass.SENSOR_DELAY_UI); //!!!! (Sampling period)
       FIsActive := True;
     end
     else

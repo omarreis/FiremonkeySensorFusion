@@ -12,12 +12,12 @@ object frmMain: TfrmMain
   object rectAccel: TRectangle
     Align = Top
     Size.Width = 368.000000000000000000
-    Size.Height = 78.000000000000000000
+    Size.Height = 97.000000000000000000
     Size.PlatformDefault = False
     object labAccelX: TLabel
       StyledSettings = [Family, Style, FontColor]
       Position.X = 8.000000000000000000
-      Position.Y = 46.000000000000000000
+      Position.Y = 70.000000000000000000
       Size.Width = 97.000000000000000000
       Size.Height = 23.000000000000000000
       Size.PlatformDefault = False
@@ -28,7 +28,7 @@ object frmMain: TfrmMain
     object labAccelY: TLabel
       StyledSettings = [Family, Style, FontColor]
       Position.X = 120.000000000000000000
-      Position.Y = 46.000000000000000000
+      Position.Y = 70.000000000000000000
       Size.Width = 97.000000000000000000
       Size.Height = 23.000000000000000000
       Size.PlatformDefault = False
@@ -39,7 +39,7 @@ object frmMain: TfrmMain
     object labAccelZ: TLabel
       StyledSettings = [Family, Style, FontColor]
       Position.X = 232.000000000000000000
-      Position.Y = 45.000000000000000000
+      Position.Y = 69.000000000000000000
       Size.Width = 105.000000000000000000
       Size.Height = 23.000000000000000000
       Size.PlatformDefault = False
@@ -50,7 +50,7 @@ object frmMain: TfrmMain
     object labAccelDatetime: TLabel
       StyledSettings = [Family, Style, FontColor]
       Position.X = 8.000000000000000000
-      Position.Y = 26.000000000000000000
+      Position.Y = 50.000000000000000000
       Size.Width = 220.000000000000000000
       Size.Height = 26.000000000000000000
       Size.PlatformDefault = False
@@ -61,7 +61,7 @@ object frmMain: TfrmMain
     object Label2: TLabel
       StyledSettings = [Family]
       Position.X = 8.000000000000000000
-      Position.Y = 6.000000000000000000
+      Position.Y = 30.000000000000000000
       Size.Width = 153.000000000000000000
       Size.Height = 26.000000000000000000
       Size.PlatformDefault = False
@@ -73,7 +73,7 @@ object frmMain: TfrmMain
     object labAccelMS: TLabel
       StyledSettings = [Family, Style, FontColor]
       Position.X = 160.000000000000000000
-      Position.Y = 5.000000000000000000
+      Position.Y = 29.000000000000000000
       Size.Width = 89.000000000000000000
       Size.Height = 26.000000000000000000
       Size.PlatformDefault = False
@@ -81,10 +81,16 @@ object frmMain: TfrmMain
       Text = '0.00 ms'
       TabOrder = 5
     end
+    object cbSensorsOn: TSwitch
+      IsChecked = False
+      Position.X = 8.000000000000000000
+      Position.Y = 6.000000000000000000
+      OnSwitch = cbSensorsOnSwitch
+    end
   end
   object rectMagnetometer: TRectangle
     Align = Top
-    Position.Y = 78.000000000000000000
+    Position.Y = 97.000000000000000000
     Size.Width = 368.000000000000000000
     Size.Height = 72.000000000000000000
     Size.PlatformDefault = False
@@ -158,14 +164,14 @@ object frmMain: TfrmMain
   end
   object rectCompass: TRectangle
     Align = Top
-    Position.Y = 150.000000000000000000
+    Position.Y = 169.000000000000000000
     Size.Width = 368.000000000000000000
-    Size.Height = 75.000000000000000000
+    Size.Height = 99.000000000000000000
     Size.PlatformDefault = False
     object labMagHeading: TLabel
       StyledSettings = [Family, Style, FontColor]
       Position.X = 11.000000000000000000
-      Position.Y = 20.000000000000000000
+      Position.Y = 44.000000000000000000
       Size.Width = 86.000000000000000000
       Size.Height = 26.000000000000000000
       Size.PlatformDefault = False
@@ -176,7 +182,7 @@ object frmMain: TfrmMain
     object Label8: TLabel
       StyledSettings = [Family]
       Position.X = 8.000000000000000000
-      Position.Y = 2.000000000000000000
+      Position.Y = 26.000000000000000000
       Size.Width = 89.000000000000000000
       Size.Height = 23.000000000000000000
       Size.PlatformDefault = False
@@ -188,7 +194,7 @@ object frmMain: TfrmMain
     object Label3: TLabel
       StyledSettings = [Family]
       Position.X = 152.000000000000000000
-      Position.Y = 10.000000000000000000
+      Position.Y = 34.000000000000000000
       Size.Width = 68.000000000000000000
       Size.Height = 26.000000000000000000
       Size.PlatformDefault = False
@@ -200,7 +206,7 @@ object frmMain: TfrmMain
     object labAltitude: TLabel
       StyledSettings = [Family, Style, FontColor]
       Position.X = 218.000000000000000000
-      Position.Y = 8.000000000000000000
+      Position.Y = 32.000000000000000000
       Size.Width = 94.000000000000000000
       Size.Height = 26.000000000000000000
       Size.PlatformDefault = False
@@ -211,7 +217,7 @@ object frmMain: TfrmMain
     object Label4: TLabel
       StyledSettings = [Family]
       Position.X = 152.000000000000000000
-      Position.Y = 34.000000000000000000
+      Position.Y = 58.000000000000000000
       Size.Width = 68.000000000000000000
       Size.Height = 26.000000000000000000
       Size.PlatformDefault = False
@@ -223,7 +229,7 @@ object frmMain: TfrmMain
     object labRoll: TLabel
       StyledSettings = [Family, Style, FontColor]
       Position.X = 218.000000000000000000
-      Position.Y = 32.000000000000000000
+      Position.Y = 56.000000000000000000
       Size.Width = 94.000000000000000000
       Size.Height = 26.000000000000000000
       Size.PlatformDefault = False
@@ -234,7 +240,7 @@ object frmMain: TfrmMain
     object labCardinal: TLabel
       StyledSettings = [Family, Style, FontColor]
       Position.X = 96.000000000000000000
-      Position.Y = 44.000000000000000000
+      Position.Y = 68.000000000000000000
       Size.Width = 41.000000000000000000
       Size.Height = 25.000000000000000000
       Size.PlatformDefault = False
@@ -246,7 +252,7 @@ object frmMain: TfrmMain
     object labTrueHeading: TLabel
       StyledSettings = [Family, Style, FontColor]
       Position.X = 11.000000000000000000
-      Position.Y = 43.000000000000000000
+      Position.Y = 67.000000000000000000
       Size.Width = 86.000000000000000000
       Size.Height = 26.000000000000000000
       Size.PlatformDefault = False
@@ -254,12 +260,23 @@ object frmMain: TfrmMain
       Text = '0'
       TabOrder = 7
     end
+    object Label1: TLabel
+      StyledSettings = [Family]
+      Position.X = 8.000000000000000000
+      Position.Y = 2.000000000000000000
+      Size.Width = 353.000000000000000000
+      Size.Height = 23.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.FontColor = claDimgray
+      Text = 'Horizontal coordinates'
+    end
   end
   object rectLocation: TRectangle
     Align = Top
-    Position.Y = 225.000000000000000000
+    Position.Y = 268.000000000000000000
     Size.Width = 368.000000000000000000
-    Size.Height = 67.000000000000000000
+    Size.Height = 88.000000000000000000
     Size.PlatformDefault = False
     object Label5: TLabel
       StyledSettings = [Family]
@@ -276,7 +293,7 @@ object frmMain: TfrmMain
     object labLocLat: TLabel
       StyledSettings = [Family, Style, FontColor]
       Position.X = 16.000000000000000000
-      Position.Y = 43.000000000000000000
+      Position.Y = 27.000000000000000000
       Size.Width = 89.000000000000000000
       Size.Height = 24.000000000000000000
       Size.PlatformDefault = False
@@ -286,7 +303,7 @@ object frmMain: TfrmMain
     object labLocLon: TLabel
       StyledSettings = [Family, Style, FontColor]
       Position.X = 128.000000000000000000
-      Position.Y = 43.000000000000000000
+      Position.Y = 27.000000000000000000
       Size.Width = 97.000000000000000000
       Size.Height = 24.000000000000000000
       Size.PlatformDefault = False
@@ -296,12 +313,31 @@ object frmMain: TfrmMain
     object labLocMagDecl: TLabel
       StyledSettings = [Family, Style, FontColor]
       Position.X = 240.000000000000000000
-      Position.Y = 43.000000000000000000
+      Position.Y = 27.000000000000000000
       Size.Width = 129.000000000000000000
       Size.Height = 24.000000000000000000
       Size.PlatformDefault = False
       Text = 'mag dec:'
       TabOrder = 3
+    end
+    object labiOSTrueHeading: TLabel
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 239.000000000000000000
+      Position.Y = 59.000000000000000000
+      Size.Width = 129.000000000000000000
+      Size.Height = 24.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'iOS TH:'
+      TabOrder = 4
+    end
+    object labLocationStatus: TLabel
+      Position.X = 8.000000000000000000
+      Position.Y = 63.000000000000000000
+      Size.Width = 217.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = '...'
+      TabOrder = 5
     end
   end
 end

@@ -10,14 +10,14 @@ uses
 Type
   TMagnetoAccelerometerFusion=class
   private
-    [Weak] fParentForm:TCommonCustomForm;  //changed from TForm that to accept TForm and TForm3D
+    [Weak] fParentForm:TForm;
 
     fAccelSensor: TSensor;        // DW sensors
     fMagSensor:   TSensor;
 
-    fLocationSensor: TLocationSensor;
+    fLocationSensor: TLocationSensor;  // need lat,lon to get magnetic declination
 
-    fAccelSensorTime: TDateTime;  // last sensor event
+    fAccelSensorTime: TDateTime;       // last sensor event
     fMagSensorTime: TDateTime;
     fCompassEventTime: TDateTime;
 
@@ -47,7 +47,7 @@ Type
 
     fErrorMessage:String;
 
-    Constructor Create(aForm:TCommonCustomForm);
+    Constructor Create(aForm:TForm);
     Destructor  Destroy; override;
     procedure   StartStopSensors(bStart: boolean);
     property    LocationSensor: TLocationSensor read fLocationSensor;
@@ -112,7 +112,7 @@ end;
 
 { TMagnetoAccelerometerFusion }
 
-constructor TMagnetoAccelerometerFusion.Create(aForm:TCommonCustomForm);
+constructor TMagnetoAccelerometerFusion.Create(aForm:TForm);
 begin
   inherited Create;
   fParentForm := aForm;
@@ -129,6 +129,12 @@ begin
   fLocationLat       :=0;
   fLocationLon       :=0;
 
+  {$IFDEF MsWindows}
+  fMagDeclination    := -21.5;     // set some simulation values for Windows
+  fLocationTime      := Now;
+  fLocationLat       := -23.5;    // home
+  fLocationLon       := -46.5;
+  {$ENDIF MsWindows}
   //create sensors
 
   fAccelSensor := TSensor.Create;
@@ -149,8 +155,8 @@ begin
 
   fCompassMinTime := 200;  // min compass event frequency in ms ( default=200ms )
 
-  fLocationSensor := TLocationSensor.Create(nil);
-  fLocationSensor.Accuracy := 50.0;
+  fLocationSensor := TLocationSensor.Create( aForm );
+  // fLocationSensor.Accuracy := 50.0;
   fLocationSensor.OnLocationChanged := LocationSensorLocationChanged;
 
   fErrorMessage:='';
@@ -190,7 +196,7 @@ begin
   tm := System.DateUtils.DateTimeToUnix( Now, {InputAsUTC:} false )*1000;
 
   // jan20: the line below was required to fix a compiler bug, corrected in Rio, apparently :)
-  //   tm := switchDWords(tm);    // <--- hack tm. Correct some endian problem passing int64 to Java API
+  tm := switchDWords(tm);    // <--- hack tm. Correct some endian problem passing int64 to Java API
   //   see https://stackoverflow.com/questions/53342348/wrong-result-calling-android-method-from-delphi/53373965#53373965
 
   GeoField := TJGeomagneticField.JavaClass.init(aLat,aLon,aAlt,tm );
@@ -208,7 +214,8 @@ begin
 
   // update mag delination
   {$IFDEF Android}    // For Android only. iOS gives True heading directly AFAIK
-  fMagDeclination := getGeomagneticDeclination({Lat:}NewLocation.Latitude ,{Lon:}NewLocation.Longitude, {Alt:} 0 ); // TODO: put a real altitude
+  if (fMagDeclination=0) and (NewLocation.Latitude<>0) then  //teste
+    fMagDeclination := getGeomagneticDeclination({Lat:}NewLocation.Latitude ,{Lon:}NewLocation.Longitude, {Alt:} 0 ); // TODO: put a real altitude
   {$ENDIF Android}
 
   {$IFDEF iOS}
@@ -225,7 +232,7 @@ begin
     end;
   {$ENDIF iOS}
 
-  // fLocationSensor.Active := false;   //get location once and stop sensor, to save battery
+  // fLocationSensor.Active := false;   //get location once and stop GPS to save battery
 end;
 
 
@@ -233,7 +240,7 @@ procedure TMagnetoAccelerometerFusion.AccelSensorValuesChangedHandler(Sender: TO
     const AValues: TSensorValues; const ATimestamp: TDateTime);
 var I,n: Integer;  ms:int64; T:TDatetime;
 begin
-  T  :=Now;
+  T  := Now;
   ms := MilliSecondsBetween(T, fAccelSensorTime);
   if (ms<17) then exit;    // 17ms ~= 1/60s    <======  limit event frequency to 1/60
   fAccelSensorTime := T;

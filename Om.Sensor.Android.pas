@@ -1,6 +1,7 @@
-unit Om.Sensor.iOS;   // derived from DW.Sensor.Android,
+unit Om.Sensor.Android;   // derived from DW.Sensor.Android,
 // to bring cross platform functionality to DW.Sensor ( by Dave Nottage )
 // code adapted by Omar ago19
+// oct20: Changed from DelphiWorlds native Android sensors to custom Delphi sebsors
 
 interface
 
@@ -16,7 +17,6 @@ type
     FIsActive: Boolean;
     FSensorStart: TDateTime;
     FTimestamp: Int64;
-    // iOS sensor code from CamSextant app
     // memoise sensors
     fGyroSensor: TCustomMotionSensor;
     fMagSensor:  TCustomOrientationSensor;
@@ -76,7 +76,7 @@ begin
   //TODO: More sensors
 end;
 
-// iOS sensor polled in a 100 ms timer
+// sensor polled in a 100 ms timer
 procedure TPlatformSensor.TimerTick(Sender:TObject);
 var  aVx,aVy,aVz:double;
      LValues: TSensorValues;
@@ -98,9 +98,9 @@ begin
        begin
          if Assigned(fGyroSensor) and (fGyroSensor.Started) then
            begin
-             aVx := -fGyroSensor.AccelerationX;   // iPhone acceleration vector is
-             aVy := -fGyroSensor.AccelerationY;   // negative in relation to Android
-             aVz := -fGyroSensor.AccelerationZ;   // invert to make both work in the Android convention
+             aVx := -fGyroSensor.AccelerationX;   // Invert gyro signal
+             aVy := -fGyroSensor.AccelerationY;
+             aVz := -fGyroSensor.AccelerationZ;
              _NotifyValues;
            end;
        end;

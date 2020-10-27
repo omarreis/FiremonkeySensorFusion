@@ -42,7 +42,10 @@ type
     labTrueHeading: TLabel;
     labiOSTrueHeading: TLabel;
     labLocationStatus: TLabel;
+    Label1: TLabel;
+    cbSensorsOn: TSwitch;
     procedure FormActivate(Sender: TObject);
+    procedure cbSensorsOnSwitch(Sender: TObject);
   private
     //fussion sensor events
     procedure FusionSensorAccelChanged(Sender:TObject);            //acceleration event
@@ -71,6 +74,12 @@ uses
 
 
 { TfrmMain }
+
+procedure TfrmMain.cbSensorsOnSwitch(Sender: TObject);
+begin
+  if cbSensorsOn.IsChecked then DoStartSensors
+    else  fMagAccelFusion.StartStopSensors({bStart:} false );
+end;
 
 constructor TfrmMain.Create(AOwner: TComponent);
 var
@@ -110,7 +119,7 @@ end;
 
 procedure TfrmMain.FormActivate(Sender: TObject);
 begin
-  DoStartSensors;  //activate on start
+  // DoStartSensors;  // activating the LocationSensor on FormActivate on iOS breaks the sensor
 end;
 
 procedure TfrmMain.FusionSensorAccelChanged(Sender:TObject);
