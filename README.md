@@ -51,6 +51,8 @@ This was commented when the compiler was corrected. Watch if using previous Delp
         ...
         
 * On FormActivate: Start sensors. For iOS you may call StartStopSensors(true). For Android, you have to ask permission to use the sensors first and start when the permissions are granted. The sample code uses DelphiWorld's permisson requester for that.
+Note: On Delphi 10.4.1 you cannot start the location sensor from FormActivate on iOS. I fixed that by activating the sensors from a 2 seconds Timer.  
+
 
         {$IFDEF Android}  // request permissions to work
         FRequester.RequestPermissions([cPermissionAccessCoarseLocation,cPermissionAccessFineLocation],                            cPermissionsBoatAttitude); 
