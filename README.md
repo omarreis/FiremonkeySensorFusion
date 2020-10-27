@@ -50,15 +50,52 @@ This was commented when the compiler was corrected. Watch if using previous Delp
         ....
         ...
         
-* On FormActivate: Start sensors. For iOS you may call StartStopSensors(true). For Android, you have to ask permission to use the sensors first and start when the permissions are granted. The sample code uses DelphiWorld's permisson requester for that.
-Note: On Delphi 10.4.1 you cannot start the location sensor from FormActivate on iOS. I fixed that by activating the sensors from a 2 seconds Timer.  
+* On FormActivate: Start sensors. For Android, you have to ask permission to use the sensors first and start when the permissions are granted. The sample code uses DelphiWorld's permisson requester for that.
+For iOS on Delphi 10.4.1 you cannot start the location sensor from FormActivate. I fixed that by activating the sensors from a 2 seconds Timer.  
 
 
-        {$IFDEF Android}  // request permissions to work
-        FRequester.RequestPermissions([cPermissionAccessCoarseLocation,cPermissionAccessFineLocation],                            cPermissionsBoatAttitude); 
-        {$ENDIF Android}
+        procedure TffmMain.timerStartSensorsiOSTimer(Sender: TObject);
+        begin
+           fMagAccelFusion.StartStopSensors({bStart:} true );  //start ios sensor feed
+           timerStartSensorsiOS.Enabled := false;              //once
+        end;
+        
+        procedure TffmMain.FormActivate(Sender: TObject);
+        begin
+          {$IFDEF Android}  // request permissions to work
+          FRequester.RequestPermissions([cPermissionAccessCoarseLocation,cPermissionAccessFineLocation], cPermissionsSensors); 
+          {$ENDIF Android}
+          
+          {$IFDEF IOS}
+          // for IOS I found u cannot start LocationSensor from FormActivate or the sensor breaks
+          // used a Timer to defer sensor start a couple seconds
+          timerStartSensorsiOS.Enabled := true;
+          {$ENDIF IOS}
+          ...
+        end; 
+        
+        {$IFDEF Android}      // Android requires permissions for things like sensors
+        procedure TFormPlanetFun.PermissionsResultHandler(Sender: TObject; const ARequestCode: Integer; const AResults: TPermissionResults);
+        var LDeniedResults: TPermissionResults; LDeniedPermissions: string; i:integer;
+        begin
+          case ARequestCode of     
+             cPermissionsSensors: begin
+                if AResults.AreAllGranted then  //all granted, start sensors 
+                begin
+                   fMagAccelFusion.StartStopSensors({bStart:} true );  
+                end
+                else begin   // denied permissions ? wtf ??
+                   LDeniedPermissions := '';
+                   LDeniedResults := AResults.DeniedResults;
+                   for I := 0 to LDeniedResults.Count - 1 do LDeniedPermissions := LDeniedPermissions + ', ' + LDeniedResults[I].Permission;
+                   showToastMessage('You denied permissons ' + LDeniedPermissions + '. We need those!');
+                end;   
+             end;
+          end;  
+        end;
+       {$ENDIF Android}
+          
 
-        {$IFDEF IOS}  fMagAccelFusion.StartStopSensors({bStart:} true );  {$ENDIF IOS}
         
 * It is good practice to disable the sensors when the app goes to background (Home btn), and enable when it comes back.       
 
