@@ -10,7 +10,7 @@ Tags: #delphi #firemonkey #Sensorfusion #pascal
 
 This project uses DelphiWorlds Android sensor code (KastriFree lib)  by Dave Nottage ( files with DW. prefix )
 
-This component is currently used in app "CamSextant"  
+This component is currently used in apps "CamSextant"  and "PlanetFun"
 
 Works as follows:
 1. Get GPS position, to calculate Magnetic Declination. Android offers a WMM service for that. iOS seems to have it too, but I worked the magnetic declination from TrueHeading/MagHeading properties of the GPS device. 
