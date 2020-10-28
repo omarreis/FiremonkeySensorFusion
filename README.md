@@ -4,7 +4,7 @@
 Accelerometer+Magnetometer+GPS sensor association object. The object calculates rectangular coordinates.
 This can be used to power augmented reality apps for mobile devices. 
 
-Cross platform code ( Android and iOS ). Tested w/ Delphi 10.3.3
+Cross platform code ( Android and iOS ). Tested w/ Delphi 10.4.1
 
 Tags: #delphi #firemonkey #Sensorfusion #pascal
 
@@ -22,12 +22,13 @@ Works as follows:
 
 iOS version uses a 100ms timer to get sensor readings. It would be better to use sensor change events, but I don't know how to do that.
 
-Android version uses native sensor code ( DelphiWorlds )
+Android version uses native sensor code ( from DelphiWorlds )
 
 Note that iOS GPS sensor has a TrueHeading property, which could be used directly, avoiding all this. But it has a problem when the altitude crosses the 45 degree boundary. The GPS TrueHeading jumps several degrees at that point. My guess is that iOS changes the rectangular coordinates axis when the altitude is more than 45 degrees, which I think is wrong. Not sure.
 
 note: versions before D10.3.3 used a hack to pass int64 via JNI on Android (Delphi JNI had some endian problem  ).
 This was commented when the compiler was corrected. Watch if using previous Delphi versions ( i.e. uncomment the hack )
+On D10.4.1 it seems the bug is back, so the hack was reintroduced :|
 
 ## Usage
 * Add unit to uses:  MagnetometerAccelerometerFusion
