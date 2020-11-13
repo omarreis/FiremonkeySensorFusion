@@ -1,4 +1,5 @@
-# updating apps for store from D10.3.3 to D10.4.1 ( iOS, Android,Windows )
+# updating apps for stores (D10.3.3 to D10.4.1)
+tips after updating 4 apps:
 
 * LocationSensor not working for iOS if activated from FormActivate
   workaround:Used a timer to defer sensor start
