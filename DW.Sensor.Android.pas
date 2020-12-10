@@ -164,7 +164,7 @@ begin
     for I := 0 to LEventValues.Length - 1 do
       LValues[I] := LEventValues[I];
   finally
-    LEventValues.Free;
+    LEventValues.Free;   // <-- Oct20: fix JNI memory leak that leads to app crash
   end;
 
   if FTimestamp = 0 then

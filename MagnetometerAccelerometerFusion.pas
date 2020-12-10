@@ -188,7 +188,6 @@ begin
   Result := nn;
 end;
 
-
 function getGeomagneticDeclination(const aLat,aLon,aAlt:Single):Single;  //for Android only
 var GeoField: JGeomagneticField; tw1,tw2:int64; t0,t:TDatetime;   tm:int64;
 begin
@@ -196,10 +195,18 @@ begin
   tm := System.DateUtils.DateTimeToUnix( Now, {InputAsUTC:} false )*1000;
 
   // jan20: the line below was required to fix a compiler bug, corrected in Rio, apparently :)
-  tm := switchDWords(tm);    // <--- hack tm. Correct some endian problem passing int64 to Java API
-  //   see https://stackoverflow.com/questions/53342348/wrong-result-calling-android-method-from-delphi/53373965#53373965
 
-  GeoField := TJGeomagneticField.JavaClass.init(aLat,aLon,aAlt,tm );
+  {$IFDEF CPUARM32}
+  // As of D10.4.1 Sydney, this hack is necessary on 32b version
+  // see https://stackoverflow.com/questions/53342348/wrong-result-calling-android-method-from-delphi/53373965#53373965
+  tm := switchDWords(tm);    // <--- hack tm. Correct some endian problem passing int64 to Java API
+  {$ENDIF CPUARM32}
+
+  {$IFDEF CPUARM64}
+  // compiler Ok for 64b version
+  {$ENDIF CPUARM64}
+
+  GeoField := TJGeomagneticField.JavaClass.init( aLat, aLon, aAlt, tm );
   Result   := GeoField.getDeclination();
 end;
 {$ENDIF ANDROID}
