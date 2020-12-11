@@ -30,6 +30,8 @@ note: versions before D10.3.3 used a hack to pass int64 via JNI on Android (Delp
 This was commented when the compiler was corrected. Watch if using previous Delphi versions ( i.e. uncomment the hack )
 On D10.4.1 it seems the bug is back, so the hack was reintroduced :|
 
+update: dez20: As of D10.4.1 Sydney, the work around is required for Android 32 bits. Source updated to fix this.
+
 ## Usage
 * Add unit to uses:  MagnetometerAccelerometerFusion
 * Add to the form:  fMagAccelFusion:TMagnetoAccelerometerFusion;
