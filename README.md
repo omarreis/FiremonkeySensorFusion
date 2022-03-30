@@ -4,7 +4,7 @@
 Accelerometer+Magnetometer+GPS sensor association object. 
 The object calculates rectangular coordinates. This can be used to power augmented reality apps for mobile devices. 
 
-Cross platform code ( Android and iOS ). 
+Cross platform code for Android and iOS. No Windows support at this time.
 
 Works as follows:
 1. Get GPS position, to calculate Magnetic Declination. Android offers a WMM service for that. iOS seems to have it too, but I worked the magnetic declination from TrueHeading/MagHeading properties of the GPS device. 
@@ -14,11 +14,12 @@ Works as follows:
 
 * ( many names for rectangular coordinates: azimuth/altitude/roll or heading/elevation/roll or pitch/bank/roll )
 
-# Component status ( mar 22 ) 
+# Current status ( mar 22 ) 
 * Current version was tested w/ Delphi 10.4.2 on iOS and Android.
-* Had to patch System.Android.Sensors.pas with DelphiWorlds Mosco by Dave Nottage. This fixes startup crash on Android 11/12 )
-* Uses DelphiWorlds Android sensor code (KastriFree lib). Files with DW. prefix.
-* This code is currently used in apps *CamSextant* and *PlanetFun*, both on Apple AppStore and Google Play (free).
+* Included patch to System.Android.Sensors.pas with DelphiWorlds Mosco by Dave Nottage. This fixes startup crash on Android 11/12. 
+* For Android, uses DelphiWorlds sensor code (from KastriFree lib). Files with DW. prefix.
+* For iOS, using XCode 13. DelphiWorlds Mosco used to build the IPA.
+* This code is currently powers apps "*CamSextant*" and "*PlanetFun*", on Apple AppStore and Google Play (free).
 * Tags: #delphi #firemonkey #sensors #Sensorfusion #pascal
 
 # Implementation notes:
