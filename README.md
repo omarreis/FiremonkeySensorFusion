@@ -35,12 +35,14 @@ On D10.4.1 it seems the bug is back, so the hack was reintroduced :|
 update: dez20: As of D10.4.1 Sydney, the work around is required for Android 32 bits. Source updated to fix this.
 
 ## Usage
+
+* TMagnetoAccelerometerFusion is not a TComponent, so there is no need to install it as a package.  It is instanced at run-time.
 * Add unit to uses:  MagnetometerAccelerometerFusion
-* Add to the form:  fMagAccelFusion:TMagnetoAccelerometerFusion;
+* Add form variable:    fMagAccelFusion:TMagnetoAccelerometerFusion;
 * On FormCreate:
 
       fMagAccelFusion := TMagnetoAccelerometerFusion.Create(Self);
-      // fMagAccelFusion.OnAccelerometerChange  := FusionSensorAccelChanged;          //optional sensor events
+      // fMagAccelFusion.OnAccelerometerChange  := FusionSensorAccelChanged;          // optional sensor events
       // fMagAccelFusion.OnMagnetometerChange   := FusionSensorMagChanged;
       fMagAccelFusion.OnHeadingAltitudeChange:= FusionSensorHeadingAltitudeChanged;   // combined sensor change handler
     
@@ -48,16 +50,16 @@ update: dez20: As of D10.4.1 Sydney, the work around is required for Android 32 
 
       procedure TfrmMain.FusionSensorHeadingAltitudeChanged(Sender:TObject);
       begin
-        labMagHeading.Text  := Format('m: %5.1f°', [fMagAccelFusion.fTCMagHeading]); 
+        // in this sample just show rectagular coordinates
+        labMagHeading.Text  := Format('m: %5.1f°', [fMagAccelFusion.fTCMagHeading]);     
         labTrueHeading.Text := Format('t: %5.1f°', [fMagAccelFusion.fTCTrueHeading]);
-        labAltitude.Text  := Format('%5.1f°', [fMagAccelFusion.fAltitude] );
-        labRoll.Text      := Format('%5.1f°', [fMagAccelFusion.fRoll] );
+        labAltitude.Text    := Format('%5.1f°',    [fMagAccelFusion.fAltitude] );
+        labRoll.Text        := Format('%5.1f°',    [fMagAccelFusion.fRoll] );
         ....
         ...
         
 * On FormActivate: Start sensors. For Android, you have to ask permission to use the sensors first and start when the permissions are granted. The sample code uses DelphiWorld's permisson requester for that.
-For iOS on Delphi 10.4.1 you cannot start the location sensor from FormActivate. I fixed that by activating the sensors from a 2 seconds Timer.  
-
+For iOS on Delphi 10.4.1 you cannot start the location sensor from FormActivate (I don't know why). Fixed that by activating the sensors from a 2 seconds delay TTimer.  
 
         procedure TffmMain.timerStartSensorsiOSTimer(Sender: TObject);
         begin
@@ -100,15 +102,15 @@ For iOS on Delphi 10.4.1 you cannot start the location sensor from FormActivate.
         end;
        {$ENDIF Android}
           
-
         
-* It is good practice to disable the sensors when the app goes to background (Home btn), and enable when it comes back.       
+* It is good practice to disable the sensors when the app goes to background (Home btn) and enable when it comes back.       
 
 ## Samples
 * SensorFusionDemo1 - Simple usage sample in this repository.
 * BoatAttitude - A more elaborate sample. A boat 3d model is targeted by a camera controlled by phone attitude. Can be found at https://github.com/omarreis/BoatAttitude . The app illustrates how to use *quaternions* to set 3d object rotations, instead of manipulating RotationAngle. 
 * Also in the same repository: sample *AirlinerAttitude* features an 3d airplane model, for the aviation inclined.
 .
+
 ## SensorFusionDemo screenshot.
 
 ![Screenshot](SensorFusionShot.png)
