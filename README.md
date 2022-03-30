@@ -11,15 +11,16 @@ Works as follows:
 2. Get Accelerometer and Magnetometer 3D vectors
 3. Calculate tilt compensated rectangular coordinates* by rotating the magnetometer vector with the accelerometer vector. This results in the magnetic vector in relation to the phone attitude.
 4. Apply magnetic declination to obtain True Heading (azimuth)
+5. Current coordinates are returned to user code on OnHeadingAltitudeChange callback event.  
 
-* ( many names for rectangular coordinates: azimuth/altitude/roll or heading/elevation/roll or pitch/bank/roll )
+( many names for rectangular coordinates: azimuth/altitude/roll or heading/elevation/roll or pitch/bank/roll )
 
-# Current status ( mar 22 ) 
+# Current code status ( mar 22 ) 
 * Current version was tested w/ Delphi 10.4.2 on iOS and Android.
 * Included patch to System.Android.Sensors.pas with DelphiWorlds Mosco by Dave Nottage. This fixes startup crash on Android 11/12. 
 * For Android, uses DelphiWorlds sensor code (from KastriFree lib). Files with DW. prefix.
 * For iOS, using XCode 13. DelphiWorlds Mosco used to build the IPA.
-* This code is currently powers apps "*CamSextant*" and "*PlanetFun*", on Apple AppStore and Google Play (free).
+* This code is currently powers apps "*CamSextant*" and "*PlanetFun*"  Apple AppStore and Google Play. Free.
 * Tags: #delphi #firemonkey #sensors #Sensorfusion #pascal
 
 # Implementation notes:
