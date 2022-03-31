@@ -1,20 +1,29 @@
 ![Banner](AirlinerAttitudeBanner.png)
 
 # FiremonkeySensorFusion
-Accelerometer+Magnetometer+GPS sensor association object. 
-The object calculates rectangular coordinates. This can be used to power augmented reality apps for mobile devices. 
+
+*TMagnetoAccelerometerFusion* object combines phone sensor output from:
+
+* Magnetometer
+* Accelerometer
+* GPS 
+ 
+to obtain the *phone attitude* vector. This is the direction the phone is pointing and the rotation in relation to vertical. 
+The object calculates phone's *rectangular coordinates*. This can be used to power *augmented reality* apps for mobile devices. 
+Many names for rectangular coordinates: azimuth/altitude/roll or heading/elevation/roll or pitch/bank/roll. You choose.
 
 Cross platform code for Android and iOS. No Windows support at this time.
 
-Works as follows:
-1. Get GPS position, to calculate Magnetic Declination. Android offers a WMM service for that. iOS seems to have it too, but I worked the magnetic declination from TrueHeading/MagHeading properties of the GPS device. 
+What the object does:
+
+1. Get GPS position and calculate Magnetic Declination. Android offers a WMM service for that. iOS seems to have it too, but I couldn't find. for iOS I worked the magnetic declination from TrueHeading/MagHeading properties of the GPS device. 
+Note that GPS coordinates are used only for the purpose of magnetic declination calculation (once per session). 
 2. Get Accelerometer and Magnetometer 3D vectors
-3. Calculate tilt compensated rectangular coordinates* by rotating the magnetometer vector with the accelerometer vector. This results in the magnetic vector in relation to the phone attitude.
+3. Calculate tilt compensated coordinates by rotating the magnetometer vector with the accelerometer vector. 
+This results in the magnetic vector in relation to the phone.
 4. Apply magnetic declination to obtain True Heading (azimuth)
-5. Current coordinates are returned to user code on OnHeadingAltitudeChange callback event.  
-
-( many names for rectangular coordinates: azimuth/altitude/roll or heading/elevation/roll or pitch/bank/roll )
-
+5. Phone attitude changes are returned to user code on OnHeadingAltitudeChange event. User app has to implement this. 
+ 
 # Current code status ( mar 22 ) 
 * Current version was tested w/ Delphi 10.4.2 on iOS and Android.
 * Included patch to System.Android.Sensors.pas with DelphiWorlds Mosco by Dave Nottage. This fixes startup crash on Android 11/12. 
