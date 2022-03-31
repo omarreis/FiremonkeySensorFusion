@@ -29,7 +29,7 @@ This results in the magnetic vector in relation to the phone.
 * Included patch to System.Android.Sensors.pas with DelphiWorlds Mosco by Dave Nottage. This fixes startup crash on Android 11/12. 
 * For Android, uses DelphiWorlds sensor code (from KastriFree lib). Files with DW. prefix.
 * For iOS, using XCode 13. DelphiWorlds Mosco used to build the IPA.
-* This code is currently powers apps "*CamSextant*" and "*PlanetFun*"  Apple AppStore and Google Play. Free.
+* This object currently powers apps "*CamSextant*" and "*PlanetFun*", available from AppStore and Google Play. Free.
 * Tags: #delphi #firemonkey #sensors #Sensorfusion #pascal
 
 # Implementation notes:
@@ -40,16 +40,16 @@ Recent changes to both Android and iOS requires explicit permision before starti
 
 Note that iOS GPS sensor has a TrueHeading property, which could be used directly, avoiding all this. But it has a problem when the altitude crosses the 45 degree boundary. The GPS TrueHeading jumps several degrees at that point. My guess is that iOS changes the rectangular coordinates axis when the altitude is more than 45 degrees, which I think is wrong. Not sure.
 
-note: versions before D10.3.3 used a hack to pass int64 via JNI on Android (Delphi JNI had some endian problem  ).
+In versions before D10.3.3 used a hack to pass int64 via JNI on Android (Delphi JNI had some endian problem  ).
 This was commented when the compiler was corrected. Watch if using previous Delphi versions ( i.e. uncomment the hack )
 On D10.4.1 it seems the bug is back, so the hack was reintroduced :|
 update: dez20: As of D10.4.1 Sydney, the work around is required for Android 32 bits. Source updated to fix this.
 
 ## Usage
 
-* TMagnetoAccelerometerFusion is not a TComponent, so there is no need to install it as a package.  It is instanced at run-time.
+* TMagnetoAccelerometerFusion is not a component, no need to install it as a package.  It is instanced at run-time.
 * Add unit to uses:  MagnetometerAccelerometerFusion
-* Add form variable:    fMagAccelFusion:TMagnetoAccelerometerFusion;
+* Add form variable:  fMagAccelFusion:TMagnetoAccelerometerFusion;
 * On FormCreate:
 
       fMagAccelFusion := TMagnetoAccelerometerFusion.Create(Self);
