@@ -12,7 +12,19 @@ to obtain the *phone attitude* vector. This is the direction the phone is pointi
 The object calculates phone's *rectangular coordinates*. This can be used to power *augmented reality* apps for mobile devices. 
 Many names for rectangular coordinates: azimuth/altitude/roll or heading/elevation/roll or pitch/bank/roll. You choose.
 
-Cross platform code for Android and iOS. No Windows support at this time.
+        phone attitude - rectangular coordinates
+           -Y     Z       altitude X 
+            |    /        heading  Y 
+            |   /         roll     Z   
+        /===+===\\
+        |   | / ||
+        |   |/  ||
+        |   *---|---------- X
+        |       ||
+        |   O   ||
+        \-------//
+
+Cross platform Delphi Object Pascal for Android and iOS. No Windows support at this time.
 
 What the object does:
 
@@ -31,18 +43,6 @@ This results in the magnetic vector in relation to the phone.
 * For iOS, using XCode 13. DelphiWorlds Mosco used to build the IPA.
 * This object currently powers apps "*CamSextant*" and "*PlanetFun*", available from AppStore and Google Play. Free.
 * Tags: #delphi #firemonkey #sensors #Sensorfusion #pascal
-
-        phone attitude - rectangular coordinates
-           -Y     Z       altitude X 
-            |    /        heading  Y 
-            |   /         roll     Z   
-        /===+===\\
-        |   | / ||
-        |   |/  ||
-        |   *---|---------- X
-        |       ||
-        |   O   ||
-        \-------//
 
 # Implementation notes:
 iOS version uses a 100ms timer to get sensor readings. It would be better to use sensor change events, but I don't know how to do that.
