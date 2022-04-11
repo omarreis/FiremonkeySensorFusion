@@ -16,7 +16,7 @@ Many names for rectangular coordinates: azimuth/altitude/roll or heading/elevati
            -Y     Z       altitude X 
             |    /        heading  Y 
             |   /         roll     Z   
-        /===+===\\                     ( Y points down, Z point inside the screen )
+        /===+===\\                     ( Y points down, Z points inside the screen )
         |   | / ||
         |   |/  ||
         |   *---|---------- X
