@@ -135,6 +135,13 @@ For iOS on Delphi 10.4.1 you cannot start the location sensor from FormActivate 
 * Also in the same repository: sample *AirlinerAttitude* features an 3d airplane model, for the aviation inclined.
 .
 
+## Apps that use FiremonkeySensorFusion 
+For iOS and Android. Search for:
+
+* "CamSextant" - Phone sextant with celestial calculator. Simplest celestial navigation solution.
+* "PlanetFun" - 4D Solar System model. Can be attached to the phone sensors.   
+* "OPYC" - Sailing game. Steer the boat with the phone.
+
 ## SensorFusionDemo screenshot.
 
 ![Screenshot](SensorFusionShot.png)
