@@ -84,8 +84,8 @@ update: dez20: As of D10.4.1 Sydney, the work around is required for Android 32 
         ....
         ...
         
-* On FormActivate: Start sensors. For Android, you have to ask permission to use the sensors first and start when permissions are granted. 
-
+* On FormActivate: Start sensors. For Android, you have to ask permission to use the sensors and start when permissions are granted. On iOS starting sensors from FormActivate didn't work. Instead I started from a timer. Note that the sample application doesn't start the sensors this way. User have to manually start using using the checkbox.
+ 
       procedure TfrmMain.timerStartSensorsiOSTimer(Sender: TObject);  // iOS deferred start timer
       begin
         fMagAccelFusion.StartStopSensors({bStart:} true );  //start ios sensor feed
