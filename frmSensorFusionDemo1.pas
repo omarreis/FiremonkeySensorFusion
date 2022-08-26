@@ -69,7 +69,6 @@ implementation
 uses
   System.Permissions,  // permission request for Android
   FMX.DialogService,
-
   System.DateUtils;
 
 
@@ -82,8 +81,7 @@ begin
 end;
 
 constructor TfrmMain.Create(AOwner: TComponent);
-var
-  LSensorType: TSensorType;
+//var  LSensorType: TSensorType;
 begin
   inherited;
   //create sensors
@@ -101,18 +99,19 @@ begin
 end;
 
 procedure TfrmMain.DoStartSensors;
-{$IFDEF ANDROID} const PermissionAccessFineLocation = 'android.permission.ACCESS_FINE_LOCATION'; {$ENDIF}
+{$IFDEF ANDROID}
+const PermissionAccessFineLocation = 'android.permission.ACCESS_FINE_LOCATION';
+{$ENDIF ANDROID}
 begin
 {$IFDEF ANDROID}
   PermissionsService.RequestPermissions([PermissionAccessFineLocation],
-    procedure(const APermissions: TArray<string>; const AGrantResults: TArray<TPermissionStatus>)
-    begin
-      if (Length(AGrantResults)=1) and (AGrantResults[0]=TPermissionStatus.Granted) then
-        fMagAccelFusion.StartStopSensors({bStart:} true )
-      else TDialogService.ShowMessage('Location permission not granted');
-    end
-  );
-{$ELSE}  //iOS
+          procedure(const APermissions: TClassicStringDynArray; const AGrantResults: TClassicPermissionStatusDynArray)
+          begin
+            if (Length(AGrantResults) = 1) and (AGrantResults[0] = TPermissionStatus.Granted) then
+              fMagAccelFusion.StartStopSensors({bStart:} true )
+              else TDialogService.ShowMessage('Location permission not granted');
+          end)
+{$ELSE}  //iOS    ( Windows sensors not implemenmted )
    fMagAccelFusion.StartStopSensors({bStart:} true );
 {$ENDIF}
 end;

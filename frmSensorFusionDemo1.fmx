@@ -2,8 +2,8 @@ object frmMain: TfrmMain
   Left = 0
   Top = 0
   Caption = 'Form1'
-  ClientHeight = 445
-  ClientWidth = 368
+  ClientHeight = 447
+  ClientWidth = 366
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
@@ -11,7 +11,7 @@ object frmMain: TfrmMain
   DesignerMasterStyle = 0
   object rectAccel: TRectangle
     Align = Top
-    Size.Width = 368.000000000000000000
+    Size.Width = 366.000000000000000000
     Size.Height = 97.000000000000000000
     Size.PlatformDefault = False
     object labAccelX: TLabel
@@ -91,7 +91,7 @@ object frmMain: TfrmMain
   object rectMagnetometer: TRectangle
     Align = Top
     Position.Y = 97.000000000000000000
-    Size.Width = 368.000000000000000000
+    Size.Width = 366.000000000000000000
     Size.Height = 72.000000000000000000
     Size.PlatformDefault = False
     object labMagX: TLabel
@@ -165,7 +165,7 @@ object frmMain: TfrmMain
   object rectCompass: TRectangle
     Align = Top
     Position.Y = 169.000000000000000000
-    Size.Width = 368.000000000000000000
+    Size.Width = 366.000000000000000000
     Size.Height = 99.000000000000000000
     Size.PlatformDefault = False
     object labMagHeading: TLabel
@@ -275,7 +275,7 @@ object frmMain: TfrmMain
   object rectLocation: TRectangle
     Align = Top
     Position.Y = 268.000000000000000000
-    Size.Width = 368.000000000000000000
+    Size.Width = 366.000000000000000000
     Size.Height = 88.000000000000000000
     Size.PlatformDefault = False
     object Label5: TLabel
