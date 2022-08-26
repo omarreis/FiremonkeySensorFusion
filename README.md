@@ -62,9 +62,9 @@ update: dez20: As of D10.4.1 Sydney, the work around is required for Android 32 
 
 ## Usage
 
-* TMagnetoAccelerometerFusion is not a component, o need to install it as a package.  It is instanced at run-time.
-* Add unit to uses:  MagnetometerAccelerometerFusion  
-* Add form variable:  fMagAccelFusion:TMagnetoAccelerometerFusion;
+* TMagnetoAccelerometerFusion is not a component so there is no need to install it as a package.  It is instanced at run-time.
+* Add unit to uses:  *MagnetometerAccelerometerFusion*  
+* Add form variable:  *fMagAccelFusion:TMagnetoAccelerometerFusion;*
 * On FormCreate:
 
       fMagAccelFusion := TMagnetoAccelerometerFusion.Create(Self);
