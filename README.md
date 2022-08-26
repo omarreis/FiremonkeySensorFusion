@@ -137,7 +137,7 @@ For iOS on Delphi 10.4.1 you cannot start the location sensor from FormActivate 
 * Also in the same repository: sample *AirlinerAttitude* features an 3d airplane model, for the aviation inclined.
 .
 
-## SensorFusionDemo screenshot.
+## SensorFusionDemo1 screenshot.
 
 ![Screenshot](SensorFusionShot.png)
 
