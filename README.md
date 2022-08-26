@@ -93,11 +93,9 @@ update: dez20: As of D10.4.1 Sydney, the work around is required for Android 32 
       end;
   
       procedure TfrmMain.FormActivate(Sender: TObject);
-      {$IFDEF Android} 
-      const PermissionAccessFineLocation = 'android.permission.ACCESS_FINE_LOCATION';
-      {$ENDIF}
       begin
         {$IFDEF Android}  // request permissions to start sensor
+          const PermissionAccessFineLocation = 'android.permission.ACCESS_FINE_LOCATION';
           PermissionsService.RequestPermissions([PermissionAccessFineLocation],
              procedure(const APermissions: TClassicStringDynArray; const AGrantResults: TClassicPermissionStatusDynArray)
              begin
