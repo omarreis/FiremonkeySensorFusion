@@ -62,8 +62,8 @@ update: dez20: As of D10.4.1 Sydney, the work around is required for Android 32 
 
 ## Usage
 
-* TMagnetoAccelerometerFusion is not a component, no need to install it as a package.  It is instanced at run-time.
-* Add unit to uses:  MagnetometerAccelerometerFusion
+* TMagnetoAccelerometerFusion is not a component, o need to install it as a package.  It is instanced at run-time.
+* Add unit to uses:  MagnetometerAccelerometerFusion  
 * Add form variable:  fMagAccelFusion:TMagnetoAccelerometerFusion;
 * On FormCreate:
 
@@ -84,8 +84,39 @@ update: dez20: As of D10.4.1 Sydney, the work around is required for Android 32 
         ....
         ...
         
-* On FormActivate: Start sensors. For Android, you have to ask permission to use the sensors first and start when the permissions are granted. The sample code uses DelphiWorld's permisson requester for that.
-For iOS on Delphi 10.4.1 you cannot start the location sensor from FormActivate (I don't know why). Fixed that by activating the sensors from a 2 seconds delay TTimer.  
+* On FormActivate: Start sensors. For Android, you have to ask permission to use the sensors first and start when permissions are granted. 
+
+      procedure TffmMain.timerStartSensorsiOSTimer(Sender: TObject);  // iOS deferred start timer
+      begin
+        fMagAccelFusion.StartStopSensors({bStart:} true );  //start ios sensor feed
+        timerStartSensorsiOS.Enabled := false;              //once
+      end;
+  
+      procedure TffmMain.FormActivate(Sender: TObject);
+      {$IFDEF Android} 
+      const PermissionAccessFineLocation = 'android.permission.ACCESS_FINE_LOCATION';
+      {$ENDIF}
+      begin
+        {$IFDEF Android}  // request permissions to start sensor
+          PermissionsService.RequestPermissions([PermissionAccessFineLocation],
+             procedure(const APermissions: TClassicStringDynArray; const AGrantResults: TClassicPermissionStatusDynArray)
+             begin
+               if (Length(AGrantResults) = 1) and (AGrantResults[0] = TPermissionStatus.Granted) then
+                 fMagAccelFusion.StartStopSensors( true )     // bStart=true
+                 else TDialogService.ShowMessage('Location permission not granted');
+          end)
+        {$ENDIF Android}
+    
+        {$IFDEF IOS}
+        // for IOS I found u cannot start LocationSensor from FormActivate or the sensor breaks
+        // used a Timer to defer sensor start a couple seconds
+        timerStartSensorsiOS.Enabled := true;
+        {$ENDIF IOS}
+        ...
+      end; 
+  
+For iOS on Delphi 10.4.1 you cannot start the location sensor from FormActivate (I don't know why. Nopt sure about D11.1). 
+Fixed that by activating the sensors from a 2 seconds TTimer.  
 
         procedure TffmMain.timerStartSensorsiOSTimer(Sender: TObject);
         begin
@@ -94,40 +125,26 @@ For iOS on Delphi 10.4.1 you cannot start the location sensor from FormActivate 
         end;
         
         procedure TffmMain.FormActivate(Sender: TObject);
-        begin
-          {$IFDEF Android}  // request permissions to work
-          FRequester.RequestPermissions([cPermissionAccessCoarseLocation,cPermissionAccessFineLocation], cPermissionsSensors); 
-          {$ENDIF Android}
+       {$IFDEF ANDROID}
+       const PermissionAccessFineLocation = 'android.permission.ACCESS_FINE_LOCATION';
+       {$ENDIF ANDROID}
+       begin
+          {$IFDEF Android}      // request permissions to use sensors
+          PermissionsService.RequestPermissions([PermissionAccessFineLocation],
+             procedure(const APermissions: TClassicStringDynArray; const AGrantResults: TClassicPermissionStatusDynArray)
+               begin
+                 if (Length(AGrantResults) = 1) and (AGrantResults[0] = TPermissionStatus.Granted) then
+                   fMagAccelFusion.StartStopSensors({bStart:} true )
+                   else TDialogService.ShowMessage('Location permission not granted');
+             end)
+         {$ENDIF Android}
           
           {$IFDEF IOS}
           // for IOS I found u cannot start LocationSensor from FormActivate or the sensor breaks
           // used a Timer to defer sensor start a couple seconds
           timerStartSensorsiOS.Enabled := true;
           {$ENDIF IOS}
-          ...
         end; 
-        
-        {$IFDEF Android}      // Android requires permissions for things like sensors
-        procedure TFormPlanetFun.PermissionsResultHandler(Sender: TObject; const ARequestCode: Integer; const AResults: TPermissionResults);
-        var LDeniedResults: TPermissionResults; LDeniedPermissions: string; i:integer;
-        begin
-          case ARequestCode of     
-             cPermissionsSensors: begin
-                if AResults.AreAllGranted then  //all granted, start sensors 
-                begin
-                   fMagAccelFusion.StartStopSensors({bStart:} true );  
-                end
-                else begin   // denied permissions ? wtf ??
-                   LDeniedPermissions := '';
-                   LDeniedResults := AResults.DeniedResults;
-                   for I := 0 to LDeniedResults.Count - 1 do LDeniedPermissions := LDeniedPermissions + ', ' + LDeniedResults[I].Permission;
-                   showToastMessage('You denied permissons ' + LDeniedPermissions + '. We need those!');
-                end;   
-             end;
-          end;  
-        end;
-       {$ENDIF Android}
-          
         
 * It is good practice to disable the sensors when the app goes to background (Home btn) and enable when it comes back.       
 
