@@ -41,10 +41,10 @@ This results in the magnetic vector in relation to the phone.
 
 * tested w/ Delphi 11.1 on iOS and Android. Fixed sensor permission request for Android (aug/22)
 * tested w/ Delphi 10.4.2 on iOS and Android (jun/22)
+* Switched from DelphiWorlds permissions to System.Permissions (in sample SensorFusionDemo1 - mai/22)
 * Included patch to System.Android.Sensors.pas with DelphiWorlds Mosco by Dave Nottage. This fixes startup crash on Android 11/12. 
 * For Android, uses DelphiWorlds sensor code (from KastriFree lib). Files with DW. prefix.
-* For iOS, using XCode 13. DelphiWorlds Mosco used to build the IPA.
-* This object currently powers apps "*CamSextant*" and "*PlanetFun*", available from AppStore and Google Play. Free.
+* This object currently powers apps "*CamSextant*" and "*PlanetFun*", available from AppStore and Google Play. 
 * Tags: #delphi #firemonkey #sensors #Sensorfusion #pascal
 
 # Implementation notes:
