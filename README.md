@@ -127,7 +127,7 @@ On Android, one must ask for permission to use sensors.
         end;
         
         procedure TfrmMain.FormActivate(Sender: TObject);
-       begin
+        begin
           {$IFDEF Android}      // request permissions to use sensors
           const PermissionAccessFineLocation = 'android.permission.ACCESS_FINE_LOCATION';
           PermissionsService.RequestPermissions([PermissionAccessFineLocation],
@@ -137,16 +137,15 @@ On Android, one must ask for permission to use sensors.
                    fMagAccelFusion.StartStopSensors({bStart:} true )
                    else TDialogService.ShowMessage('Location permission not granted');
              end)
-         {$ENDIF Android}
+          {$ENDIF Android}
           
-          {$IFDEF IOS}
-          // for IOS  cannot start LocationSensor from FormActivate or the sensor breaks
+          {$IFDEF IOS}   // for IOS u cannot start LocationSensor from FormActivate (sensor breaks)
           // used a Timer to defer sensor start a couple seconds
           timerStartSensorsiOS.Enabled := true;
           {$ENDIF IOS}
         end; 
         
-* It is good practice to disable the sensors when the app goes to background (Home btn) and enable when it comes back.       
+* It is good practice to disable the sensors when the app goes to background (Home btn) and enable when it comes back.      
 
 ## Samples
 * SensorFusionDemo1 - Simple usage sample in this repository.
