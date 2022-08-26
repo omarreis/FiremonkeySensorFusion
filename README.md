@@ -117,6 +117,8 @@ update: dez20: As of D10.4.1 Sydney, the work around is required for Android 32 
   
 For iOS on Delphi 10.4.1 you cannot start the location sensor from FormActivate (I don't know why. Nopt sure about D11.1). 
 Fixed that by activating the sensors from a 2 seconds TTimer.  
+On Android, one must ask for permission to use sensors. 
+* Add *System.Permissions* to *uses*
 
         procedure TffmMain.timerStartSensorsiOSTimer(Sender: TObject);
         begin
@@ -125,11 +127,9 @@ Fixed that by activating the sensors from a 2 seconds TTimer.
         end;
         
         procedure TffmMain.FormActivate(Sender: TObject);
-       {$IFDEF ANDROID}
-       const PermissionAccessFineLocation = 'android.permission.ACCESS_FINE_LOCATION';
-       {$ENDIF ANDROID}
        begin
           {$IFDEF Android}      // request permissions to use sensors
+          const PermissionAccessFineLocation = 'android.permission.ACCESS_FINE_LOCATION';
           PermissionsService.RequestPermissions([PermissionAccessFineLocation],
              procedure(const APermissions: TClassicStringDynArray; const AGrantResults: TClassicPermissionStatusDynArray)
                begin
@@ -140,7 +140,7 @@ Fixed that by activating the sensors from a 2 seconds TTimer.
          {$ENDIF Android}
           
           {$IFDEF IOS}
-          // for IOS I found u cannot start LocationSensor from FormActivate or the sensor breaks
+          // for IOS  cannot start LocationSensor from FormActivate or the sensor breaks
           // used a Timer to defer sensor start a couple seconds
           timerStartSensorsiOS.Enabled := true;
           {$ENDIF IOS}
