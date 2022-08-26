@@ -36,9 +36,11 @@ This results in the magnetic vector in relation to the phone.
 4. Project the vector to horizontal to obtain Magnetic Heading.
 5. Apply magnetic declination to heading to obtain True Heading (a.k.a Azimuth)
 6. Phone attitude changes are returned to user code on OnHeadingAltitudeChange event. User app has to implement this. 
- 
-# Current code status ( mar 22 ) 
-* Current version was tested w/ Delphi 10.4.2 on iOS and Android.
+
+# Current code status
+
+* tested w/ Delphi 11.1 on iOS and Android. Fixed sensor permission request for Android (aug/22)
+* tested w/ Delphi 10.4.2 on iOS and Android (jun/22)
 * Included patch to System.Android.Sensors.pas with DelphiWorlds Mosco by Dave Nottage. This fixes startup crash on Android 11/12. 
 * For Android, uses DelphiWorlds sensor code (from KastriFree lib). Files with DW. prefix.
 * For iOS, using XCode 13. DelphiWorlds Mosco used to build the IPA.
