@@ -86,13 +86,13 @@ update: dez20: As of D10.4.1 Sydney, the work around is required for Android 32 
         
 * On FormActivate: Start sensors. For Android, you have to ask permission to use the sensors first and start when permissions are granted. 
 
-      procedure TffmMain.timerStartSensorsiOSTimer(Sender: TObject);  // iOS deferred start timer
+      procedure TfrmMain.timerStartSensorsiOSTimer(Sender: TObject);  // iOS deferred start timer
       begin
         fMagAccelFusion.StartStopSensors({bStart:} true );  //start ios sensor feed
         timerStartSensorsiOS.Enabled := false;              //once
       end;
   
-      procedure TffmMain.FormActivate(Sender: TObject);
+      procedure TfrmMain.FormActivate(Sender: TObject);
       {$IFDEF Android} 
       const PermissionAccessFineLocation = 'android.permission.ACCESS_FINE_LOCATION';
       {$ENDIF}
@@ -120,13 +120,13 @@ Fixed that by activating the sensors from a 2 seconds TTimer.
 On Android, one must ask for permission to use sensors. 
 * Add *System.Permissions* to *uses*
 
-        procedure TffmMain.timerStartSensorsiOSTimer(Sender: TObject);
+        procedure TfrmMain.timerStartSensorsiOSTimer(Sender: TObject);
         begin
            fMagAccelFusion.StartStopSensors({bStart:} true );  //start ios sensor feed
            timerStartSensorsiOS.Enabled := false;              //once
         end;
         
-        procedure TffmMain.FormActivate(Sender: TObject);
+        procedure TfrmMain.FormActivate(Sender: TObject);
        begin
           {$IFDEF Android}      // request permissions to use sensors
           const PermissionAccessFineLocation = 'android.permission.ACCESS_FINE_LOCATION';
