@@ -34,7 +34,7 @@ Note that GPS coordinates are used only for the purpose of magnetic declination 
 3. Calculate tilt compensated coordinates by rotating the magnetometer vector with the accelerometer vector. 
 This results in the magnetic vector in relation to the phone attitude.
 4. Project the vector to horizontal to obtain Magnetic Heading.
-5. Apply magnetic declination to heading to obtain True Heading (a.k.a Azimuth)
+5. Apply magnetic declination to mag heading to obtain *True Heading* (a.k.a Azimuth)
 6. Phone attitude changes are returned to user code on OnHeadingAltitudeChange event. User app has to implement this. 
 
 # Current code status (project News)
