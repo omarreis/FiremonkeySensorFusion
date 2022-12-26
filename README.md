@@ -129,10 +129,14 @@ Add *System.Permissions* to *uses*
 ![Screenshot](SensorFusionShot.png)
 
 ## Apps that use FiremonkeySensorFusion 
-For iOS and Android. Search for:
+Apps for iOS and Android. Search application stores for:
 
 * "CamSextant" - Phone sensors sextant with celestial calculator. Simplest celestial navigation solution. Use the phone as a complete celnav tool ( sextant + calculator). perpetual Nautical Almanac. Uses sensors to capture celestial object altitutudes. Two sights and you have a fix..
 * "PlanetFun" - 4D Solar System model. 3D camera can be attached to the phone sensors. Uses actual planet ephemeris data (VSOP 2013 to calculate planet pósitions).
 * "Navigator HD" - Complete celestial navigation tool, with Perpetual almanac, meridian passage, Lines of Position, Astronomical Position. E-Book with celestial navigation basics.
 * "OPYC" - Sailing game. Steer the boat with the phone inclination.
+
+Or search for "omarreis" developer.
+
+ 
 
