@@ -28,11 +28,11 @@ Cross platform Delphi Object Pascal for Android and iOS. No Windows support at t
 
 What the object does:
 
-1. Get GPS position and calculate Magnetic Declination. Android offers a WMM service for that. iOS seems to have it too, but I couldn't find. for iOS I worked the magnetic declination from TrueHeading/MagHeading properties of the GPS device. 
+1. Get GPS position and calculate Magnetic Declination. Android offers a WMM service for that (given a lat,lon it returns the magnetic declination). iOS seems to have it too, but I couldn't find the AP. So for iOS the magnetic declination is obtained from TrueHeading-MagHeading (properties of the GPS |sensor). 
 Note that GPS coordinates are used only for the purpose of magnetic declination calculation (once per session). 
 2. Get Accelerometer and Magnetometer 3D vectors
 3. Calculate tilt compensated coordinates by rotating the magnetometer vector with the accelerometer vector. 
-This results in the magnetic vector in relation to the phone.
+This results in the magnetic vector in relation to the phone attitude.
 4. Project the vector to horizontal to obtain Magnetic Heading.
 5. Apply magnetic declination to heading to obtain True Heading (a.k.a Azimuth)
 6. Phone attitude changes are returned to user code on OnHeadingAltitudeChange event. User app has to implement this. 
