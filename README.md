@@ -135,7 +135,7 @@ Apps for iOS and Android. Search application stores for:
 
 * "PlanetFun" - 4D Solar System model (3d space+time). The scene 3D camera can be attached to the phone sensors, creating an augmented reality experience. Uses serious  planet almanac data (theory VSOP 2013 to calculate planet pósitions).
 
-see github.com/omarreis/vsop2013/tree/master/planetfun
+see https://github.com/omarreis/vsop2013/tree/master/planetfun
 
 * "Navigator HD" - Complete celestial navigation tool, with perpetual almanac, meridian passage, Lines of Position, Astronomical Position. E-Book with celestial navigation basics.
 
