@@ -1,5 +1,9 @@
 unit MagnetometerAccelerometerFusion;  // Android/iOS sensor fusion: Accelerometer+Magnetometer
-// Calculates tilt compensated Heading (N based), plus altitude and phone roll (the last two require the phone vertical)
+ //-----------------------------------//
+// Calculates tilt compensated Heading (N based),
+// plus altitude and phone roll (the last two require the phone vertical)
+//------------------------------------------------------------------
+
 interface
 
 uses

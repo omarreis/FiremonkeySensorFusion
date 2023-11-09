@@ -1,4 +1,15 @@
 unit frmSensorFusionDemo1;   // Test Android sensor fusion: Accelerometer+Magnetometer
+  //------------------------//
+ // This app is based on Dave Nottage KastriFree Sensor demo.
+// Output from accelerometer and magnetometer are combined with
+// Magnetic Declination to obtain phone attitude.
+// (Azimuth-Elevation-Roll or rectangular coordinates ).
+// LocationSensor (GPS) is used once, to calculate the
+// Magnetic Declination.
+
+// On Android, the WMM model is available ( OS service lib )
+// I didn't find that service on iOS. LocationSensor value used instead.
+//------------------------------------------------------------------------
 
 interface
 
@@ -7,8 +18,8 @@ uses
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.Controls.Presentation,
   FMX.StdCtrls, FMX.ListBox, FMX.ScrollBox, FMX.Memo, FMX.Objects,
 
-  DW.Sensor,
-  MagnetometerAccelerometerFusion;
+  DW.Sensor,                         // Kastri free Sensor s for Android
+  MagnetometerAccelerometerFusion;   // object TMagnetoAccelerometerFusion
 
 type
   TfrmMain = class(TForm)
@@ -44,8 +55,13 @@ type
     labLocationStatus: TLabel;
     Label1: TLabel;
     cbSensorsOn: TSwitch;
+    Label6: TLabel;
+    Label9: TLabel;
+    TimerUpdateFPS: TTimer;
+    labFPS: TLabel;
     procedure FormActivate(Sender: TObject);
     procedure cbSensorsOnSwitch(Sender: TObject);
+    procedure TimerUpdateFPSTimer(Sender: TObject);
   private
     //fussion sensor events
     procedure FusionSensorAccelChanged(Sender:TObject);            //acceleration event
@@ -55,8 +71,15 @@ type
     procedure DoStartSensors;  //combined
   public
     fMagAccelFusion:TMagnetoAccelerometerFusion;
+
+    // FPS calculations
+    fFrameCount  :integer;    // count sensor ticks
+    fLastFPS     :TDatetime;  // last time fPS was computed
+    fLastFPScount:integer;
+    fFPS:Single;
+
     constructor Create(AOwner: TComponent); override;
-    destructor Destroy; override;
+    destructor  Destroy; override;
   end;
 
 var
@@ -74,10 +97,14 @@ uses
 
 { TfrmMain }
 
+// In this Demo, sensors are started with checkbox
+
 procedure TfrmMain.cbSensorsOnSwitch(Sender: TObject);
 begin
   if cbSensorsOn.IsChecked then DoStartSensors
     else  fMagAccelFusion.StartStopSensors({bStart:} false );
+
+  TimerUpdateFPS.Enabled := cbSensorsOn.IsChecked;
 end;
 
 constructor TfrmMain.Create(AOwner: TComponent);
@@ -90,6 +117,12 @@ begin
   fMagAccelFusion.OnAccelerometerChange  := FusionSensorAccelChanged;
   fMagAccelFusion.OnMagnetometerChange   := FusionSensorMagChanged;
   fMagAccelFusion.OnHeadingAltitudeChange:= FusionSensorHeadingAltitudeChanged;
+
+  fFrameCount   :=0;    //cam image paint count
+  fLastFPS      :=0;   //never
+  fLastFPScount :=0;
+  fFPS          :=0;
+
 end;
 
 destructor TfrmMain.Destroy;
@@ -147,6 +180,21 @@ begin
    labMagMS.Text := IntToStr(fMagAccelFusion.fMagMS)+ ' ms';
 end;
 
+procedure TfrmMain.TimerUpdateFPSTimer(Sender: TObject);
+var T,DT:TDatetime; nFrames:integer;
+begin
+  //compute FPS
+  T  := Now;   //timestamp
+  //upd FPS
+  nFrames:= (fFrameCount-fLastFPScount);
+  DT     := (T-fLastFPS)*3600*24;  //DT in secs
+  if (DT>0) and (nFrames>0) then fFPS:=nFrames/DT
+    else fFPS:=0;
+  fLastFPS     := T;
+  fLastFPScount:= fFrameCount;
+  labFPS.Text := Trim(Format('%4.1f',[fFPS]))+' fps';   //show fps 4 all
+end;
+
 function courseToDirectionStr(const aCourse:integer):String;  // p.e. 180 --> 'S'
 const                            //  0   1    2   3    4   5    6    7   8
   direcoes:array[0..8] of String = ('N','NE','E','SE','S','SW','W','NW','N');
@@ -159,6 +207,8 @@ end;
 
 procedure TfrmMain.FusionSensorHeadingAltitudeChanged(Sender:TObject);
 begin
+  inc( fFrameCount );  // fps count -- actually it is sensor Readings Per Second
+
   labMagHeading.Text  := Format('m: %5.1f°', [fMagAccelFusion.fTCMagHeading]);
   labTrueHeading.Text := Format('t: %5.1f°', [fMagAccelFusion.fTCTrueHeading]);
 

@@ -2,8 +2,8 @@ object frmMain: TfrmMain
   Left = 0
   Top = 0
   Caption = 'Form1'
-  ClientHeight = 447
-  ClientWidth = 366
+  ClientHeight = 585
+  ClientWidth = 315
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
@@ -11,7 +11,7 @@ object frmMain: TfrmMain
   DesignerMasterStyle = 0
   object rectAccel: TRectangle
     Align = Top
-    Size.Width = 366.000000000000000000
+    Size.Width = 315.000000000000000000
     Size.Height = 97.000000000000000000
     Size.PlatformDefault = False
     object labAccelX: TLabel
@@ -68,7 +68,7 @@ object frmMain: TfrmMain
       TextSettings.Font.StyleExt = {00070000000000000004000000}
       TextSettings.FontColor = claDimgray
       Text = 'Accelerometer'
-      TabOrder = 4
+      TabOrder = 5
     end
     object labAccelMS: TLabel
       StyledSettings = [Family, Style, FontColor]
@@ -79,7 +79,7 @@ object frmMain: TfrmMain
       Size.PlatformDefault = False
       TextSettings.Font.Size = 10.000000000000000000
       Text = '0.00 ms'
-      TabOrder = 5
+      TabOrder = 6
     end
     object cbSensorsOn: TSwitch
       IsChecked = False
@@ -87,11 +87,24 @@ object frmMain: TfrmMain
       Position.Y = 6.000000000000000000
       OnSwitch = cbSensorsOnSwitch
     end
+    object Label9: TLabel
+      StyledSettings = [Family]
+      Position.X = 97.000000000000000000
+      Position.Y = 5.000000000000000000
+      Size.Width = 153.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 14.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.FontColor = claDimgray
+      Text = 'Sensors On'
+      TabOrder = 4
+    end
   end
   object rectMagnetometer: TRectangle
     Align = Top
     Position.Y = 97.000000000000000000
-    Size.Width = 366.000000000000000000
+    Size.Width = 315.000000000000000000
     Size.Height = 72.000000000000000000
     Size.PlatformDefault = False
     object labMagX: TLabel
@@ -165,7 +178,7 @@ object frmMain: TfrmMain
   object rectCompass: TRectangle
     Align = Top
     Position.Y = 169.000000000000000000
-    Size.Width = 366.000000000000000000
+    Size.Width = 315.000000000000000000
     Size.Height = 99.000000000000000000
     Size.PlatformDefault = False
     object labMagHeading: TLabel
@@ -201,7 +214,7 @@ object frmMain: TfrmMain
       TextSettings.Font.StyleExt = {00070000000000000004000000}
       TextSettings.FontColor = claDimgray
       Text = 'Altitude'
-      TabOrder = 2
+      TabOrder = 3
     end
     object labAltitude: TLabel
       StyledSettings = [Family, Style, FontColor]
@@ -212,7 +225,7 @@ object frmMain: TfrmMain
       Size.PlatformDefault = False
       TextSettings.Font.Size = 14.000000000000000000
       Text = '0'
-      TabOrder = 3
+      TabOrder = 4
     end
     object Label4: TLabel
       StyledSettings = [Family]
@@ -224,7 +237,7 @@ object frmMain: TfrmMain
       TextSettings.Font.StyleExt = {00070000000000000004000000}
       TextSettings.FontColor = claDimgray
       Text = 'Roll'
-      TabOrder = 4
+      TabOrder = 5
     end
     object labRoll: TLabel
       StyledSettings = [Family, Style, FontColor]
@@ -235,7 +248,7 @@ object frmMain: TfrmMain
       Size.PlatformDefault = False
       TextSettings.Font.Size = 14.000000000000000000
       Text = '0'
-      TabOrder = 5
+      TabOrder = 6
     end
     object labCardinal: TLabel
       StyledSettings = [Family, Style, FontColor]
@@ -247,7 +260,7 @@ object frmMain: TfrmMain
       TextSettings.Font.Size = 16.000000000000000000
       TextSettings.HorzAlign = Center
       Text = '--'
-      TabOrder = 6
+      TabOrder = 7
     end
     object labTrueHeading: TLabel
       StyledSettings = [Family, Style, FontColor]
@@ -258,7 +271,7 @@ object frmMain: TfrmMain
       Size.PlatformDefault = False
       TextSettings.Font.Size = 16.000000000000000000
       Text = '0'
-      TabOrder = 7
+      TabOrder = 8
     end
     object Label1: TLabel
       StyledSettings = [Family]
@@ -271,12 +284,25 @@ object frmMain: TfrmMain
       TextSettings.FontColor = claDimgray
       Text = 'Horizontal coordinates'
     end
+    object labFPS: TLabel
+      StyledSettings = [Family, Style]
+      HitTest = True
+      Position.X = 147.000000000000000000
+      Position.Y = 2.000000000000000000
+      Size.Width = 73.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 10.000000000000000000
+      TextSettings.FontColor = claMediumslateblue
+      TextSettings.HorzAlign = Center
+      Text = '0'
+      TabOrder = 2
+    end
   end
   object rectLocation: TRectangle
-    Align = Top
-    Position.Y = 268.000000000000000000
-    Size.Width = 366.000000000000000000
-    Size.Height = 88.000000000000000000
+    Align = Client
+    Size.Width = 315.000000000000000000
+    Size.Height = 317.000000000000000000
     Size.PlatformDefault = False
     object Label5: TLabel
       StyledSettings = [Family]
@@ -339,5 +365,27 @@ object frmMain: TfrmMain
       Text = '...'
       TabOrder = 5
     end
+    object Label6: TLabel
+      Anchors = [akLeft, akTop, akRight, akBottom]
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 17.000000000000000000
+      Position.Y = 152.000000000000000000
+      Size.Width = 290.000000000000000000
+      Size.Height = 141.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.VertAlign = Leading
+      Text = 
+        'Output from accelerometer and magnetometer are combined with Mag' +
+        'netic Declination to obtain phone attitude (Azimuth-Elevation-Ro' +
+        'll).    LocationSensor (GPS) is used once, to calculate the magn' +
+        'etic declination.'
+      TabOrder = 6
+    end
+  end
+  object TimerUpdateFPS: TTimer
+    Enabled = False
+    OnTimer = TimerUpdateFPSTimer
+    Left = 136
+    Top = 360
   end
 end
